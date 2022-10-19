@@ -22,11 +22,16 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $fillable = [
-        'name',
+        'us_name',
+        'us_apellido',
+
+        'us_phone',
+
         'email',
         'password',
-        'lote_id',
-        'updated_token'
+        'us_lote_id',
+        'us_updated_token',
+        'us_active'
     ];
 
     /**
@@ -50,11 +55,18 @@ class User extends Authenticatable
 
     public function country()
     {
-        return $this->belongsTo(Country::class, 'country_id', 'id');
+        return $this->belongsTo(Country::class, 'co_id', 'id');
     }
-
+    public function lote()
+    {
+        return $this->belongsTo(Lote::class, 'us_lote_id','lot_id');
+       // return $this->belongsTo(Lote::class);
+    }
     public static function geToken(){
 
         return Str::random(8);
+    }
+    public function rolUser(){
+
     }
 }

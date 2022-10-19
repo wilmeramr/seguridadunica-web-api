@@ -14,7 +14,7 @@ class AddUpdatedTokenToUsers extends Migration
     public function up()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->timestamp('updated_token')->nullable()->useCurrent();
+            $table->timestamp('us_updated_token')->nullable()->useCurrent();
 
             //
         });

@@ -18,11 +18,11 @@ class Code extends Model
     public static function getUniqueReferralCode(){
 
         do{
-            $code = Str::random(11);
+            $code = Str::random(21);
 
         }while(Code::where('referral_code',$code)->exists());
 
-   
+
         return $code;
     }
 }

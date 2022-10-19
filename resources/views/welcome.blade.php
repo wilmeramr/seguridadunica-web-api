@@ -37,7 +37,7 @@
             @endif
 
             <div class="flex justify-center pt-8 sm:justify-start sm:pt-0">
-                <img src="{{ asset('img/segunicawelcom.jpg') }}" alt="logo" width="100%"
+                <img src="{{ asset('img/acceso.jpeg') }}" alt="logo" width="100%"
                              class="shadow-light">
     </body>
 </html>

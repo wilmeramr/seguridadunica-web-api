@@ -18,4 +18,18 @@ class Authenticate extends Middleware
             return route('login');
         }
     }
+
+    protected function authenticate($request, array $guards)
+    {
+        parent::authenticate($request, $guards);
+
+        // Got here? good! it means the user is session authenticated. now we should check if it authorize
+        if (!auth()->user()->us_active || auth()->user()->roles[0]->name=='Residente') {
+
+            auth()->logout();
+            $this->unauthenticated($request, $guards);
+
+        }
+    }
+
 }
