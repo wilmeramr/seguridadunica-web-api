@@ -18,7 +18,6 @@ Broadcast::channel('App.Models.User.{id}', function ($user, $id) {
 });
 
 Broadcast::channel('Emergencias.{receiver}', function ($user, $receiver) {
-    \Log::debug($receiver);
   //return true;
       return (int) $user->lote()->first()->country()->first()->co_id === (int) $receiver;
 });
