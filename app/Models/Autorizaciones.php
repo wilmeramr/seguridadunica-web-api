@@ -30,12 +30,16 @@ class Autorizaciones extends Model
         'aut_sabado',
         'aut_domingo',
         'aut_comentario',
-        'aut_activo'
+        'aut_fecha_evento',
+        'aut_fecha_evento_hasta',
+        'aut_cantidad_invitado',
+        'aut_activo',
+        'aut_app'
 
     ];
 
     public function tipoAutorizacion()
-    
+
     {
         return $this->belongsTo(AutorizacionTipo::class, 'aut_tipo', 'id');
     }

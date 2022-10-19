@@ -23,6 +23,7 @@ class HomeController extends Controller
      */
     public function index()
     {
+       // dd(\Auth::user()->lote()->first()->country()->first());
         return view('home');
     }
 }

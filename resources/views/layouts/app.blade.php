@@ -24,6 +24,7 @@
 
 
     @yield('css')
+
 </head>
 <body>
 
@@ -88,15 +89,15 @@
     }(jQuery));
 
     $(document).ready(function(){
-    
+
     $("a").click(function(){
-        
+
         $("a").removeClass("activo");
         $(this).addClass("activo")
-        
+
     });
-    
-    
+
+
 });
 </script>
 

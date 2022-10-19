@@ -10,8 +10,14 @@ class Lote extends Model
     use HasFactory;
 
     protected $fillable =[
-        'lote_name',
-        'lote_countryid',
-        'activo'
+        'lot_id',
+        'lot_name',
+        'lot_country_id',
+        'lot_activo'
     ];
+
+    public function country()
+    {
+        return $this->belongsTo(Country::class,  'lot_country_id','co_id');
+    }
 }

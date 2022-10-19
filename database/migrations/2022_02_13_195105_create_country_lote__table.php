@@ -14,13 +14,13 @@ class CreateCountryLoteTable extends Migration
     public function up()
     {
         Schema::create('country_lote', function (Blueprint $table) {
-            $table->id();
-            $table->unsignedBigInteger('lote_id');
-            $table->unsignedBigInteger('country_id');
+            $table->id('cl_id');
+            $table->unsignedBigInteger('cl_lote_id');
+            $table->unsignedBigInteger('cl_country_id');
             $table->timestamps();
 
-            $table->foreign('lote_id')->references('id')->on('lotes')->onDelete('cascade');
-            $table->foreign('country_id')->references('id')->on('countries')->onDelete('cascade');
+            $table->foreign('cl_lote_id')->references('lot_id')->on('lotes')->onDelete('cascade');
+            $table->foreign('cl_country_id')->references('co_id')->on('countries')->onDelete('cascade');
 
 
         });

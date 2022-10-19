@@ -1,12 +1,12 @@
 
 <form class="form-inline mr-auto">
           <ul class="navbar-nav mr-3">
-            <li><a href="#" data-toggle="sidebar" class="nav-link nav-link-lg"><i class="fas fa-bars"></i></a></li>
+            <li>  <a href="javascript:void(0);" class="sidebarCollapse" data-placement="bottom"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-list"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3" y2="6"></line><line x1="3" y1="12" x2="3" y2="12"></line><line x1="3" y1="18" x2="3" y2="18"></line></svg></a></li>
           </ul>
           <span class="navbar-brand  justify-content-center">  {{
-                        
+
                         \Illuminate\Support\Facades\Auth::user()->country->name
-       
+
                     }}</span>
         </form>
 
@@ -21,9 +21,9 @@
                      class="rounded-circle mr-1 thumbnail-rounded user-thumbnail ">
                 <div class="d-sm-none d-lg-inline-block">
                     ¡Hola! {{
-                        
+
                         \Illuminate\Support\Facades\Auth::user()->name
-       
+
                     }}</div>
             </a>
 

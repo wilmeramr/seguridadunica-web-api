@@ -14,12 +14,12 @@ class CreateLotesTable extends Migration
     public function up()
     {
         Schema::create('lotes', function (Blueprint $table) {
-            $table->id();
-            $table->string('lote_name');
-            $table->integer('lote_countryid');
-            $table->boolean('activo');
+            $table->id('lot_id');
+            $table->string('lot_name');
+            $table->integer('lot_country_id');
+            $table->boolean('lot_activo');
             $table->timestamps();
-            $table->unique(["lote_name", "lote_countryid"], 'lote_name_lote_countryid_unique');
+            $table->unique(["lot_name", "lot_country_id"], 'lot_name_lot_country_id_unique');
         });
     }
 

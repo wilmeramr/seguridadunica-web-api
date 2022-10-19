@@ -1,0 +1,60 @@
+        @page {
+           margin: 50px 25px;
+        }
+    body {
+                margin-top: 4cm;
+                margin-left: 2cm;
+                margin-right: 2cm;
+                margin-bottom: 2cm;
+            }
+        .header h1 {
+			 position: fixed;
+            margin: 0;
+        }
+ 
+        .footer {
+			 position: fixed;
+            bottom: 15px;
+            font-size: 7pt;
+            color: #333333;             
+            border-top: 1px solid #1f1f1f;
+            z-index: 1000;
+        }
+
+
+     
+       header {
+                position: fixed;
+                top: -60px;
+                left: 0px;
+                right: 0px;
+                height: 50px;
+
+                /** Extra personal styles **/
+                background-color: #03a9f4;
+                color: white;
+                text-align: center;
+                line-height: 35px;
+            }
+
+            footer {
+                position: fixed; 
+                bottom: -60px; 
+                left: 0px; 
+                right: 0px;
+                height: 50px; 
+
+                /** Extra personal styles **/
+                background-color: #03a9f4;
+                color: white;
+                text-align: center;
+                line-height: 35px;
+				  
+               
+            }
+			.page-break {
+    page-break-after: always;
+}
+        .pagenum:before {
+            content: counter(page);
+        }
