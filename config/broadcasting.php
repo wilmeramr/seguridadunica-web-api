@@ -37,9 +37,8 @@ return [
             'app_id' => env('PUSHER_APP_ID'),
             'options' => [
                 'cluster' => env('PUSHER_APP_CLUSTER'),
-                'host' =>'ws.seguridadunica.com',
-                'port'=>6001,
-                'useTLS' => false,
+
+                'useTLS' => true,
             ],
         ],
 

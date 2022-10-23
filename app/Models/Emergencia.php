@@ -12,6 +12,7 @@ class Emergencia extends Model
 
     protected $fillable =[
         'eme_country_id',
+        'eme_tipo_id',
         'eme_lote_id',
         'eme_user_id',
         'eme_lote_name',

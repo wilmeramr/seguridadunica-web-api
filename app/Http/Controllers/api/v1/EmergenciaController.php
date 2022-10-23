@@ -53,6 +53,7 @@ class EmergenciaController extends Controller
 
 
         Emergencia::create([
+            'eme_tipo_id'=> $request->eme_tipo_id,
             'eme_country_id'=>$co_id,
             'eme_lote_id'=> $lote_id,
             'eme_user_id'=>$user_id,
@@ -60,11 +61,39 @@ class EmergenciaController extends Controller
             'eme_user_name'=>$request->user()->us_name.' '.$request->user()->us_apellido
         ]);
 
+
+        switch ($request['eme_tipo_id']) {
+            case 1:
+                $noti_titulo ="ALERTA ACTIVADA";
+                $noti_body ="ALERTA A SEGURIDAD ACTIVADA POR ".Str::upper($request->user()->us_name.' '.$request->user()->us_apellido);
+
+                break;
+                case 2:
+                    $noti_titulo ="ALERTA ACTIVADA";
+                    $noti_body ="ALERTA LLAMAR A 911 ACTIVADA POR ".Str::upper($request->user()->us_name.' '.$request->user()->us_apellido);
+                    break;
+                    case 3:
+                        $noti_titulo ="ALERTA ACTIVADA";
+                        $noti_body ="ALERTA MÉDICA ACTIVADA POR ".Str::upper($request->user()->us_name.' '.$request->user()->us_apellido);
+                        break;
+                        case 4:
+                            $noti_titulo ="ALERTA ACTIVADA";
+                            $noti_body ="ALERTA DE INCENDIO ACTIVADA POR ".Str::upper($request->user()->us_name.' '.$request->user()->us_apellido);
+                            break;
+            default:
+            $noti_titulo ="ALERTA ACTIVADA";
+            $noti_body ="ALERTA A SEGURIDAD ACTIVADA POR ".Str::upper($request->user()->us_name.' '.$request->user()->us_apellido);
+
+                break;
+        }
+
+
+
         Notificacion::create([
             'noti_user_id'=>$request->user()->id,
             'noti_aut_code'=> 'EMERGENCIA',
-            'noti_titulo' =>  "EMERGENCIA ACTIVADA",
-            'noti_body' =>   'EMERGENCIA ACTIVADA POR '.Str::upper($request->user()->us_name.' '.$request->user()->us_apellido),
+            'noti_titulo' =>  $noti_titulo,
+            'noti_body' =>   $noti_body,
             'noti_to' => 'L',
             'noti_to_user' =>$request->user()->id,
 
