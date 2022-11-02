@@ -9,11 +9,13 @@ use App\Http\Controllers\api\v1\DeviceController;
 use App\Http\Controllers\api\v1\DocumentoController;
 use App\Http\Controllers\api\v1\EmergenciaController;
 use App\Http\Controllers\api\v1\ExpensaController;
+use App\Http\Controllers\api\v1\HorarioDeporteController;
 use App\Http\Controllers\api\v1\NotificacionController;
 use App\Http\Controllers\api\v1\MascotaController;
 use App\Http\Controllers\api\v1\NoticiaController;
 use App\Http\Controllers\api\v1\ServicioTiposController;
 use App\Http\Controllers\api\v1\SelfieController;
+use App\Http\Controllers\api\v1\TipoReservasController;
 
 
 /*
@@ -90,6 +92,11 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
 
 
     Route::get('/selfieurl', [SelfieController::class, 'getUrlSelfie']);
+    Route::get('/treservas', [TipoReservasController::class, 'index']);
+    Route::post('/reservas', [TipoReservasController::class, 'create']);
+    Route::delete('/reservas', [TipoReservasController::class, 'destroy']);
+    Route::get('/horarios', [HorarioDeporteController::class, 'index']);
+
 
     });
 
