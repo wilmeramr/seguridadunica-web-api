@@ -20,7 +20,8 @@ class CreateTipoReservasTable extends Migration
             $table->integer('tresr_tipo');
             $table->integer('tresr_tipo_horarios');
             $table->integer('tresr_cant_lugares')->default(1);
-
+           $table->string('tresr_email');
+           $table->string( 'tresr_url',400);
             $table->integer('tresr_activo')->default(1);
             $table->timestamps();
 

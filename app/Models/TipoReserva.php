@@ -17,6 +17,8 @@ class TipoReserva extends Model
         'tresr_tipo',
         'tresr_tipo_horarios',
         'tresr_cant_lugares',
+        'tresr_email',
+        'tresr_url',
         'tresr_activo',
 
      ];
