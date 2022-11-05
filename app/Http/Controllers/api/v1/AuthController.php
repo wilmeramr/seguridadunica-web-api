@@ -109,7 +109,10 @@ class AuthController extends Controller
             'apellido' => $user->us_apellido,
             'rol' => $user->roles[0]->name,
             'lote'=> $lote->lot_name,
-            'country'=>$country->co_name
+            'loteId'=>$user->us_lote_id,
+            'country'=>$country->co_name,
+            'countryId'=>$lote->lot_country_id,
+
 
 
         ];

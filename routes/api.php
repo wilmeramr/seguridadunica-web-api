@@ -10,6 +10,7 @@ use App\Http\Controllers\api\v1\DocumentoController;
 use App\Http\Controllers\api\v1\EmergenciaController;
 use App\Http\Controllers\api\v1\ExpensaController;
 use App\Http\Controllers\api\v1\HorarioDeporteController;
+use App\Http\Controllers\api\v1\InfoController;
 use App\Http\Controllers\api\v1\NotificacionController;
 use App\Http\Controllers\api\v1\MascotaController;
 use App\Http\Controllers\api\v1\NoticiaController;
@@ -98,7 +99,16 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
 
     Route::post('/reservas', [ReservasController::class, 'create']);
     Route::delete('/reservas', [ReservasController::class, 'destroy']);
+    Route::delete('/reservashorarios', [ReservasController::class, 'destroyRHorarios']);
+
     Route::get('/horarios', [HorarioDeporteController::class, 'index']);
+
+    Route::get('/info', [InfoController::class, 'index']);
+    Route::post('/info', [InfoController::class, 'create']);
+    Route::delete('/info', [InfoController::class, 'destroy']);
+
+
+
 
 
     });
