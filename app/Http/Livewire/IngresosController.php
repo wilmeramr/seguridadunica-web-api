@@ -20,6 +20,7 @@ class IngresosController extends Component
     use WithFileUploads;
     public $ingr_autoriza, $search,$selected_id,$pageTitle,$componentName,$ingr_foto,$ingr_foto_base64,$ingr_nombre;
     public  $detalle_ingreso,$ingresoDetail,$ingr_doc,$servicio_id,$ingr_obser,$ingr_patente,$ingr_vto;
+    public $urlFotoFctual;
     private $pagination =10;
 
     public function paginationView()
@@ -339,16 +340,19 @@ public function Desactivar_Ingr_Foto($id)
                       ->select('id')
                       ->orderBy('us_name','asc')->get();
 
-                      $datos = Ingreso::where('ingr_documento','=',$barcode)->whereIn('ingr_user_c',$users)->select("*")->first();
+                      $datos = Ingreso::where('ingr_documento','=',$barcode)->whereIn('ingr_user_c',$users)->select("*")->orderby('ingr_id','desc')->first();
 
                             if( $datos !=null){
+                              //  dd($datos);
                                 $this-> ingr_nombre =  $datos->ingr_nombre;
                                 $this->ingr_foto_base64 = $datos->ingr_foto;
+                                //$this->urlFotoFctual = $datos->ingr_foto;
                                // $this-> aut_email =  $datos->aut_email;
 
                             }else{
                                 $this-> ingr_nombre="";
                                 $this->ingr_foto_base64 = '';
+                              //  $this->urlFotoFctual='';
                                 //$this-> aut_email="";
 
                             }

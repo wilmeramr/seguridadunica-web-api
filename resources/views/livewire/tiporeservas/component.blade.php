@@ -27,7 +27,17 @@
                     Nombre
                 </th>
                 <th class="table-th text-white text-center">
+                    Tipo
+                </th>
+                <th class="table-th text-white text-center">
+                    Rango en Hrs
+                </th>
+
+                <th class="table-th text-white text-center">
                     Country
+                </th>
+                <th class="table-th text-white text-center">
+                    Url
                 </th>
 
                 <th class="table-th text-white text-center">
@@ -36,23 +46,36 @@
                 </thead>
 
                 <tbody>
-                    @foreach ($data as $lote)
+                    @foreach ($data as $treserva)
                               <tr>
                         <td>
-                            <h6 class="text-center">{{$lote->lot_name}}</h6>
+                            <h6 class="text-center">{{$treserva->tresr_description}}</h6>
                         </td>
                         <td>
-                            <h6  class="text-center">{{$lote->co_name}}</h6>
+                            <h6 class="text-center">{{$treserva->tipo}}</h6>
+                        </td>
+                        <td>
+                            <h6 class="text-center">{{$treserva->tresr_tipo_horarios}}</h6>
+                        </td>
+                        <td>
+                            <h6  class="text-center">{{$treserva->co_name}}</h6>
+
+                        </td>
+                        <td>
+                            @if (\Str::contains(strtolower($treserva->tresr_url),'http'))
+                            <a target="_blank" href="{{strtolower( $treserva->tresr_url)}}"> <h6>Ir</h6></a>
+
+                            @endif
 
                         </td>
 
                         <td class="text-center">
                         <a href="javascript:void(0)"
-                        wire:click.prevent="Edit({{$lote->lot_id}})" class="btn bnt-dark mtmobile" title="Edit">
+                        wire:click.prevent="Edit({{$treserva->tresr_id}})" class="btn bnt-dark mtmobile" title="Edit">
                             <i class="fas fa-edit"></i>
                         </a>
                         <a href="javascript:void(0)"
-                        onclick="Confirm('{{$lote->lot_id}}')" class="btn bnt-dark " title="Delete">
+                        onclick="Confirm('{{$treserva->tresr_id}}')" class="btn bnt-dark " title="Delete">
                             <i class="fas fa-trash"></i>
                         </a>
                         </td>
@@ -69,7 +92,7 @@
         </div>
     </div>
 
-   @include('livewire.lotes.form')
+   @include('livewire.tiporeservas.form')
    @include('livewire.emergencias')
 
     </div>
@@ -83,23 +106,24 @@
 
             });
 
-            window.livewire.on('lote-added',msg=>{
+            window.livewire.on('treservas-added',msg=>{
                 $('#theModal').modal('hide');
                 noty(msg);
             });
 
-            window.livewire.on('lote-updated',msg=>{
+            window.livewire.on('treservas-updated',msg=>{
                 $('#theModal').modal('hide');
                // noty(msg);
             });
 
-            window.livewire.on('lote-deleted',msg=>{
+            window.livewire.on('treservas-deleted',msg=>{
                 noty(msg);
             });
             window.livewire.on('hide-modal',msg=>{
                 $('#theModal').modal('hide');
 
             });
+
             window.livewire.on('hidden.bs.modal',msg=>{
                 $('.er').css('display','none');
                 window.livewire.emit('resetUI',msg);
@@ -111,8 +135,6 @@
 
                 window.livewire.emit('resetUI');
               });
-
-
 
 
         });

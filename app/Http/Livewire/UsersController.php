@@ -116,7 +116,7 @@ public function paginationView()
         $this->status ='Elegir';
         $this->selected_id ='';
         $this->us_lote_id ='Elegir';
-
+        $this->role='Elegir';
         $this->resetValidation();
         $this->resetPage();
 

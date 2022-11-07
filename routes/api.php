@@ -18,7 +18,7 @@ use App\Http\Controllers\api\v1\ReservasController;
 use App\Http\Controllers\api\v1\ServicioTiposController;
 use App\Http\Controllers\api\v1\SelfieController;
 use App\Http\Controllers\api\v1\TipoReservasController;
-
+use App\Http\Controllers\api\v1\VersionController;
 
 /*
 |--------------------------------------------------------------------------
@@ -107,6 +107,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::post('/info', [InfoController::class, 'create']);
     Route::delete('/info', [InfoController::class, 'destroy']);
 
+    Route::get('/version', [VersionController::class, 'index']);
 
 
 

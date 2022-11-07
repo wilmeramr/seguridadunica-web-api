@@ -6,15 +6,14 @@ use App\Http\Controllers\Controller;
 use App\Models\Notificacion;
 use App\Models\Lote;
 use App\Models\Country;
-use App\Models\Informacion;
 use App\Models\Noticia;
 use App\Models\Reserva;
 use App\Models\TipoReserva;
 use App\Models\User;
-
+use App\Models\Version;
 use Illuminate\Http\Request;
 
-class InfoController extends Controller
+class VersionController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -27,12 +26,11 @@ class InfoController extends Controller
             return response(['error' => 'No tienes permisos para esta accion'], 500);
         }
 
-        $Lote = Lote::where('lot_id','=',$request->user()->us_lote_id)->select('lot_country_id')->first();
-        $info = Informacion::where('info_country_id','=',$Lote->lot_country_id)->orderby('info_id','desc')
-       ->get();
+        $version = Version::where('app','=',$request->app)->select('app','android','ios')->first();
+
 
 $response = [
-    'data'=>$info
+    'data'=>$version
 ];
 
         return response($response, 201);
@@ -50,9 +48,10 @@ $response = [
         }
 
         $validator = \Validator::make($request->all(), [
-            'info_titulo' => 'required|string',
-            'info_body' => 'required|string',
-
+            'resr_tipo_id' => 'required|integer',
+            'horarioId' => 'required|integer',
+            'fecha'=> 'required|date',
+            'cant_lugar'=>'required|integer'
         ]);
 
 
@@ -61,26 +60,44 @@ $response = [
         }
         $country = Lote::where('lot_id','=',$request->user()->us_lote_id)->select('lot_country_id')->first();
 
-        Informacion::create([
-            'info_country_id' =>    $country->lot_country_id,
-            'info_titulo' => $request->info_titulo,
-            'info_body' => $request->info_body,
+        $reserva = Reserva::where('resr_country_id','=',$country->lot_country_id)
+        ->where('resr_tipo_id','=', $request->resr_tipo_id)
+        ->where('resr_horario_id','=', $request->horarioId)
+        ->where('resr_fecha','=', $request->fecha)
+        ->where('resr_lugar','=', $request->cant_lugar)
+        ->where('resr_cant_personas','=', $request->cant_lugar)->get();
+
+
+
+    if($reserva->count() > 0){
+        return response(['error' => 'El lugar ya ha sido ocupado'], 500);
+    }
+
+        Reserva::create([
+            'resr_country_id' =>    $country->lot_country_id,
+            'resr_lote_id' => $request->user()->us_lote_id,
+            'resr_tipo_id' => $request->resr_tipo_id,
+            'resr_horario_id' =>$request->horarioId,
+            'resr_fecha' => $request->fecha,
+            'resr_lugar' => $request->cant_lugar,
+            'resr_cant_personas' => $request->cant_lugar,
+            'resr_activo' =>1
         ]);
 
 
-         Notificacion::create([
+ /*        Notificacion::create([
             'noti_user_id'=>$request->user()->id,
-            'noti_aut_code'=> 'INFORMACION',
-            'noti_titulo' =>  "Nueva Información Útil.",
-            'noti_body' => $request->info_titulo,
+            'noti_aut_code'=> 'NOTICIAS',
+            'noti_titulo' =>  "Nueva Noticia.",
+            'noti_body' =>  $request['titulo'],
             'noti_to' => 'T',
             'noti_to_user' =>$request->user()->id,
 
-            'noti_event' => 'Información' ,
+            'noti_event' => 'Noticias' ,
             'noti_priority' =>'high',
             'noti_envio'=> 0,
             'noti_app'=> 1
-        ]);
+        ]); */
 
         return response('',201);
 
@@ -95,7 +112,7 @@ $response = [
         }
 
         $validator = \Validator::make($request->all(), [
-            'info_id' => 'required|integer'
+            'resr_id' => 'required|integer'
 
         ]);
 
@@ -105,11 +122,16 @@ $response = [
         }
         $country = Lote::where('lot_id','=',$request->user()->us_lote_id)->select('lot_country_id')->first();
 
-        $info = Informacion::where('info_id','=',$request->info_id)
-      ->delete();
+        $reserva = Reserva::where('resr_id','=',$request->resr_id)
+        ->where('resr_country_id','=',$country->lot_country_id)
+        ->where('resr_tipo_id','=', $request->resr_tipo_id)
+        ->where('resr_horario_id','=', $request->horarioId)
+        ->where('resr_fecha','=', $request->fecha)
+        ->where('resr_lugar','=', $request->cant_lugar)
+        ->where('resr_cant_personas','=', $request->cant_lugar)->delete();
 
 
-    if($info == 0){
+    if($reserva == 0){
         return response(['error' => 'La reversa no existe'], 500);
     }else{
         return response('',201);

@@ -27,6 +27,7 @@ use App\Http\Livewire\ReportsController;
 use App\Http\Livewire\RolesController;
 use App\Http\Livewire\ServicioController;
 use App\Http\Livewire\TipoRecurrenciaController;
+use App\Http\Livewire\TipoReservasController;
 use App\Http\Livewire\UsersController;
 
 /*
@@ -58,15 +59,38 @@ Route::get('/getUsers', [App\Http\Controllers\UsuarioController::class, 'getUser
 
 
 Route::group(['middleware' => ['auth']],function () {
+
+Route::group(['middleware' => ['role:Administrador|Administración|Seguridad']],function () {
 Route::get('/home', Dash::class);
 
-Route::group(['middleware' => ['role:Administrador|Administración']],function () {
     Route::resource('usuarios', UsuarioController::class);
     Route::get('users',UsersController::class);
    Route::get('lotes',LotesController::class);
    Route::get('countries',CountriesController::class);
 
+   // Route::resource('roles', RolController::class);
 
+   //  Route::resource('countrys', CountryController::class);
+    // Route::delete('usuarios/{id}/destroy', CountryController::class);
+
+    Route::get('asignar',AsignarController::class);
+    Route::get('autorizaciones',AutorizacionesController::class);
+    Route::get('autorizo',AutorizoController::class);
+    Route::get('recurrencia',ServicioController::class);
+    Route::get('entregas',DeliveryController::class);
+    Route::get('evento',EventoController::class);
+
+    Route::get('mascotas',MascotasController::class);
+    Route::get('notificacions',NotificacionesController::class);
+    Route::get('logout',[LoginController::class,'logout']);
+    Route::get('ingresos',IngresosController::class);
+    Route::get('rptsIngresos',ReportsController::class);
+    Route::get('treservas',TipoReservasController::class);
+
+
+
+    Route::get('report/pdf/{user}/{type}/{f1}/{f2}',[ExportController::class,'reportPDF']);
+    Route::get('report/pdf/{user}/{type}',[ExportController::class,'reportPDF']);
 
 
 });
@@ -81,27 +105,7 @@ Route::group(['middleware' => ['role:Administrador']],function () {
 
 });
 
-   // Route::resource('roles', RolController::class);
-    Route::resource('blogs', BlogController::class);
-  //  Route::resource('countrys', CountryController::class);
-   // Route::delete('usuarios/{id}/destroy', CountryController::class);
 
-   Route::get('asignar',AsignarController::class);
-   Route::get('autorizaciones',AutorizacionesController::class);
-   Route::get('autorizo',AutorizoController::class);
-   Route::get('recurrencia',ServicioController::class);
-   Route::get('entregas',DeliveryController::class);
-   Route::get('evento',EventoController::class);
-
-   Route::get('mascotas',MascotasController::class);
-   Route::get('notificacions',NotificacionesController::class);
-   Route::get('logout',[LoginController::class,'logout']);
-   Route::get('ingresos',IngresosController::class);
-   Route::get('rptsIngresos',ReportsController::class);
-
-
-   Route::get('report/pdf/{user}/{type}/{f1}/{f2}',[ExportController::class,'reportPDF']);
-   Route::get('report/pdf/{user}/{type}',[ExportController::class,'reportPDF']);
 
 
 });
