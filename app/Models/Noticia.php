@@ -12,6 +12,7 @@ class Noticia extends Model
 
     protected $fillable =[
         'notic_user_id'
+        ,'notic_country_id'
         ,'notic_titulo'
        ,'notic_body'
        ,'notic_to'
