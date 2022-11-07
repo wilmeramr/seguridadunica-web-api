@@ -84,7 +84,7 @@ class InformacionController extends Component
         public function Store(){
 
             $rules = ['info_titulo'=>'required|min:5',
-            'info_body'=>'required|min:10'
+            'info_body'=>'required|min:10|max:499'
         ];
 
             $messages =[
@@ -92,6 +92,8 @@ class InformacionController extends Component
                 'info_titulo.min'=> 'El nombre debe tener al menos 5 caracteres',
                 'info_body.required' => 'El nombre del permiso es requerido',
                 'info_body.min'=> 'El nombre debe tener al menos 10 caracteres',
+                'info_body.max'=> 'El nombre debe tener un maximo de 500 caracteres',
+
             ];
             $this->validate($rules,$messages);
 

@@ -26,10 +26,10 @@
                 <th class="table-th text-white text-center">
                     Titulo
                 </th>
+
                 <th class="table-th text-white text-center">
                     Cuerpo
                 </th>
-
 
                 <th class="table-th text-white text-center">
                     Country
@@ -42,28 +42,30 @@
                 </thead>
 
                 <tbody>
-                    @foreach ($data as $info)
+                    @foreach ($data as $noti)
                               <tr>
                         <td>
-                            <h6 class="text-center">{{$info->info_titulo}}</h6>
-                        </td>
-                        <td>
-                            <h6 class="text-center">{{ \Str::limit($info->info_body, 40, ' ...')}}</h6>
+                            <h6 class="text-center">{{$noti->notic_titulo}}</h6>
                         </td>
 
                         <td>
-                            <h6  class="text-center">{{$info->co_name}}</h6>
+                            <h6 class="text-center">{{ \Str::limit($noti->notic_body, 40, ' ...')}}</h6>
+
+                        </td>
+
+                        <td>
+                            <h6  class="text-center">{{$noti->co_name}}</h6>
 
                         </td>
 
 
                         <td class="text-center">
                         <a href="javascript:void(0)"
-                        wire:click.prevent="Edit({{$info->info_id}})" class="btn bnt-dark mtmobile" title="Edit">
+                        wire:click.prevent="Edit({{$noti->notic_id}})" class="btn bnt-dark mtmobile" title="Edit">
                             <i class="fas fa-edit"></i>
                         </a>
                         <a href="javascript:void(0)"
-                        onclick="Confirm('{{$info->info_id}}')" class="btn bnt-dark " title="Delete">
+                        onclick="Confirm('{{$noti->notic_id}}')" class="btn bnt-dark " title="Delete">
                             <i class="fas fa-trash"></i>
                         </a>
                         </td>
@@ -80,7 +82,7 @@
         </div>
     </div>
 
-   @include('livewire.informacion.form')
+   @include('livewire.noticia.form')
    @include('livewire.emergencias')
 
     </div>
@@ -94,17 +96,17 @@
 
             });
 
-            window.livewire.on('info-added',msg=>{
+            window.livewire.on('notic-added',msg=>{
                 $('#theModal').modal('hide');
                 noty(msg);
             });
 
-            window.livewire.on('info-updated',msg=>{
+            window.livewire.on('notic-updated',msg=>{
                 $('#theModal').modal('hide');
                // noty(msg);
             });
 
-            window.livewire.on('info-deleted',msg=>{
+            window.livewire.on('notic-deleted',msg=>{
                 noty(msg);
             });
             window.livewire.on('hide-modal',msg=>{
