@@ -17,6 +17,7 @@ use App\Http\Livewire\Dash;
 use App\Http\Livewire\DeliveryController;
 use App\Http\Livewire\DeviceController;
 use App\Http\Livewire\EventoController;
+use App\Http\Livewire\InformacionController;
 use App\Http\Livewire\IngresosController;
 use App\Http\Livewire\LotesController;
 use App\Http\Livewire\MascotaEspecieController;
@@ -86,6 +87,7 @@ Route::get('/home', Dash::class);
     Route::get('ingresos',IngresosController::class);
     Route::get('rptsIngresos',ReportsController::class);
     Route::get('treservas',TipoReservasController::class);
+    Route::get('info',InformacionController::class);
 
 
 
