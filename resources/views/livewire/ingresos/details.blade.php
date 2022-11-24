@@ -15,6 +15,9 @@
                     <div class="col-sm-12 col-md-12">
                         <div >
                             @if ($ingresoDetail != null)
+                            <table>
+                            <tr>
+                                <td>
 
 
                                 <p class="font-weight-bold badge {{$ingresoDetail->ingr_salida == null ? 'badge-success':'badge-danger'}} text-uppercase"> Estado:  {{$ingresoDetail->estado}}</p>
@@ -36,6 +39,13 @@
 
 
 
+
+                        </td>
+                            <td>
+                                <img src="{{$ingresoDetail->ingr_foto}}" width="250px" height="240px" alt="" >
+                            </td>
+                            </tr>
+                            </table>
 
                             @endif
 

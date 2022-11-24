@@ -63,7 +63,7 @@ Route::get('/getUsers', [App\Http\Controllers\UsuarioController::class, 'getUser
 Route::group(['middleware' => ['auth']],function () {
 
 Route::group(['middleware' => ['role:Administrador|Administración|Seguridad']],function () {
-Route::get('/home', Dash::class);
+Route::get('/home', IngresosController::class);
 
     Route::resource('usuarios', UsuarioController::class);
     Route::get('users',UsersController::class);

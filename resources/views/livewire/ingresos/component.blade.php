@@ -28,6 +28,9 @@
                             ESTADO
                         </th>
                         <th class="table-th text-white">
+                            FOTO
+                        </th>
+                        <th class="table-th text-white">
                             DOCUMENTO
                         </th>
                         <th class="table-th text-white">
@@ -58,6 +61,11 @@
                         <td class="text-center">
                             <span class="badge {{$ingreso->ingr_salida == null ? 'badge-success':'badge-danger'}} text-uppercase">{{ $ingreso->ingr_salida == null ? 'SIN SALIDA':'COMPLETADO'}}</span>
                          </td>
+                         <td class="text-center">
+
+                            <img src="{{$ingreso->ingr_foto}}" width="80" height="80" >
+
+                        </td>
 
                          <td class="text-center">
                             <h6>{{$ingreso->ingr_documento}}</h6>

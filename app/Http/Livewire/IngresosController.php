@@ -13,6 +13,7 @@ use DateTime;
 use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 use Livewire\WithFileUploads;
+use Illuminate\Support\Str;
 class IngresosController extends Component
 {
 
@@ -243,6 +244,38 @@ public function Desactivar_Ingr_Foto($id)
         $this->validate($rules,$messages);
 
 
+        $png_url = Str::uuid().".png";
+        $path = 'img/ingresos/'.$png_url;
+        $url = null;
+            if($this->ingr_foto_base64 !=null && !Str::contains($this->ingr_foto_base64, 'http') && $this->ingr_foto== null){
+
+                $image_parts = explode(";base64,", $this->ingr_foto_base64);
+                $image_base64 = base64_decode($image_parts[1]);
+             $success =   \Storage::put( $path ,  $image_base64);
+                 $url = \Storage::url('img/ingresos/'.$png_url);
+
+
+            }else
+
+            if(Str::contains($this->ingr_foto_base64, 'http')){
+
+                $url = $this->ingr_foto_base64;
+
+
+            }else
+            if($this->ingr_foto!= null){
+                $customFileNamelogo = Str::uuid().".".$this->ingr_foto->extension();
+
+                $path = 'img/ingresos';
+                $this->ingr_foto->storeAs($path,$customFileNamelogo);
+
+                $url = \Storage::url($path.'/'.$customFileNamelogo);
+
+            }
+
+
+
+
         Ingreso::create([
              'ingr_user_c' => \Auth::user()->id,
              'ingr_user_auth' => $this->ingr_autoriza,
@@ -250,6 +283,7 @@ public function Desactivar_Ingr_Foto($id)
              'ingr_nombre' => $this->ingr_nombre,
              'ingr_tipo' => $this->servicio_id,
              'ingr_patente' => $this->ingr_patente,
+             'ingr_foto' => $url,
              'ingr_entrada' =>\Carbon\Carbon::now(),
              'ingr_patente_venc' => \Carbon\Carbon::parse($this->ingr_vto)->format('Y-m-d'),
              'ingr_observacion' => $this->ingr_obser,
@@ -346,6 +380,7 @@ public function Desactivar_Ingr_Foto($id)
                               //  dd($datos);
                                 $this-> ingr_nombre =  $datos->ingr_nombre;
                                 $this->ingr_foto_base64 = $datos->ingr_foto;
+
                                 //$this->urlFotoFctual = $datos->ingr_foto;
                                // $this-> aut_email =  $datos->aut_email;
 
