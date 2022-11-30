@@ -25,29 +25,20 @@
                 <table class="table table-bordered table striped mt-1">
                     <thead class="text-white" style="background: #3B3F5C;">
                         <th class="table-th text-white">
-                            ESTADO
+                            LOTE
                         </th>
                         <th class="table-th text-white">
                             FOTO
                         </th>
                         <th class="table-th text-white">
-                            DOCUMENTO
+                            EMPRESA
                         </th>
                         <th class="table-th text-white">
-                            NOMBRE
+                            FECHA DE ENTRADA
                         </th>
                         <th class="table-th text-white">
-                            VISITA A
+                            OBSERVACIÓN
                         </th>
-                <th class="table-th text-white">
-                    LOTE
-                </th>
-                <th class="table-th text-white text-center">
-                    FECHA ENTRADA
-                </th>
-                <th class="table-th text-white">
-                    FECHA SALIDA
-                </th>
 
                 <th class="table-th text-white">
                     Actions
@@ -55,53 +46,39 @@
                 </thead>
 
                 <tbody>
-                    @foreach ($ingresos as $ingreso )
+                    @foreach ($paquetes as $paquete )
 
                     <tr >
                         <td class="text-center">
-                            <span class="badge {{$ingreso->ingr_salida == null ? 'badge-success':'badge-danger'}} text-uppercase">{{ $ingreso->ingr_salida == null ? 'SIN SALIDA':'COMPLETADO'}}</span>
-                         </td>
+                            <h6>{{$paquete->lot_name}}</h6>
+                        </td>
+
                          <td class="text-center">
 
-                            <img src="{{$ingreso->ingr_foto}}" width="80" height="80" >
+                            <img src="{{$paquete->paq_foto}}" width="80" height="80" >
 
                         </td>
 
                          <td class="text-center">
-                            <h6>{{$ingreso->ingr_documento}}</h6>
+                            <h6>{{$paquete->empresa_envio}}</h6>
                         </td>
 
                         <td class="text-center">
-                            <h6>{{$ingreso->ingr_nombre}}</h6>
+                            <h6>{{$paquete->created_at}}</h6>
                         </td>
 
                         <td>
-                            <h6>{{$ingreso->us_name}}</h6>
+                            <h6>{{ \Str::limit($paquete->pad_observacion, 40, ' ...')}}</h6>
                         </td>
 
-                        <td>
-                            <h6>{{$ingreso->lot_name}}</h6>
-                        </td>
-                        <td>
-                            <h6>{{$ingreso->ingr_entrada}}</h6>
-                        </td>
-                        <td>
-                            <h6>{{$ingreso->ingr_salida}}</h6>
-                        </td>
 
                         <td class="text-center">
                             <a href="javascript:void(0)"
-                            wire:click.prevent="show({{$ingreso->ingr_id}})"
+                            wire:click.prevent="show({{$paquete->paq_id}})"
                                 class="btn bnt-dark mtmobile" title="Ver">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-eye"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
                             </a>
-                            @if ($ingreso->ingr_salida== null)
-                                   <a href="javascript:void(0)"
-                                   onclick="Confirm({{$ingreso->ingr_id}})"
-                                class="btn bnt-dark mtmobile" title="MarcarSalida">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-log-out"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
-                             </a>
-                            @endif
+
 
                         </td>
 
@@ -110,14 +87,14 @@
 
                 </tbody>
                 </table>
-                    {{$ingresos->links()}}
+                    {{$paquetes->links()}}
 
             </div>
             </div>
         </div>
     </div>
-    @include('livewire.ingresos.form')
-    @include('livewire.ingresos.details')
+    @include('livewire.paquete.form')
+    @include('livewire.paquete.details')
     @include('livewire.emergencias')
 
     </div>
@@ -176,7 +153,7 @@
                 height: 240,
                 image_format: 'jpeg',
                 jpeg_quality: 100,
-                constraints:{
+                   constraints:{
                     facingMode: 'environment'
                 }
             });
@@ -216,17 +193,17 @@
 
             });
 
-            window.livewire.on('ingr-added',msg=>{
+            window.livewire.on('paq-added',msg=>{
                 $('#theModal').modal('hide');
                 noty(msg);
             });
 
-            window.livewire.on('ingr-updated',msg=>{
+            window.livewire.on('paq-updated',msg=>{
                 $('#theModal').modal('hide');
                 noty(msg);
             });
 
-            window.livewire.on('ingr-deleted',msg=>{
+            window.livewire.on('paq-deleted',msg=>{
                 noty(msg);
             });
             window.livewire.on('hide-modal',msg=>{

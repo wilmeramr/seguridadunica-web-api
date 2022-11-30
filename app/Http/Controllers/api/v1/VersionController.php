@@ -12,7 +12,7 @@ use App\Models\TipoReserva;
 use App\Models\User;
 use App\Models\Version;
 use Illuminate\Http\Request;
-
+use Carbon\Carbon;
 class VersionController extends Controller
 {
     /**
@@ -28,6 +28,10 @@ class VersionController extends Controller
 
         $version = Version::where('app','=',$request->app)->select('app','android','ios')->first();
 
+        $fecha = Carbon::now('America/Argentina/Buenos_Aires');
+
+
+        $version->fecha=      $fecha->addHours(-3)->addHours(12);
 
 $response = [
     'data'=>$version

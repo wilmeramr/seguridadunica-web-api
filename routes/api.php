@@ -14,6 +14,7 @@ use App\Http\Controllers\api\v1\InfoController;
 use App\Http\Controllers\api\v1\NotificacionController;
 use App\Http\Controllers\api\v1\MascotaController;
 use App\Http\Controllers\api\v1\NoticiaController;
+use App\Http\Controllers\api\v1\PaqueteriaController;
 use App\Http\Controllers\api\v1\ReservasController;
 use App\Http\Controllers\api\v1\ServicioTiposController;
 use App\Http\Controllers\api\v1\SelfieController;
@@ -109,6 +110,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
 
     Route::get('/version', [VersionController::class, 'index']);
 
+    Route::get('/paqueteria', [PaqueteriaController::class, 'index']);
 
 
 

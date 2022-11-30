@@ -24,6 +24,7 @@ use App\Http\Livewire\MascotaEspecieController;
 use App\Http\Livewire\MascotasController;
 use App\Http\Livewire\NoticiaController;
 use App\Http\Livewire\NotificacionesController;
+use App\Http\Livewire\PaqueteController;
 use App\Http\Livewire\PermisosController;
 use App\Http\Livewire\ReportsController;
 use App\Http\Livewire\RolesController;
@@ -90,10 +91,7 @@ Route::get('/home', IngresosController::class);
     Route::get('treservas',TipoReservasController::class);
     Route::get('info',InformacionController::class);
     Route::get('noticias',NoticiaController::class);
-
-
-
-
+    Route::get('paquetes',PaqueteController::class);
     Route::get('report/pdf/{user}/{type}/{f1}/{f2}',[ExportController::class,'reportPDF']);
     Route::get('report/pdf/{user}/{type}',[ExportController::class,'reportPDF']);
 
