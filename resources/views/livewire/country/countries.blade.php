@@ -23,6 +23,10 @@
             <div class="table-responsive">
                 <table class="table table-bordered table striped mt-1">
                     <thead class="text-white" style="background: #3B3F5C;">
+
+                        <th class="table-th text-white">
+                            ID
+                        </th>
                         <th class="table-th text-white">
                             LOGO
                         </th>
@@ -61,7 +65,9 @@
                     @foreach ($countries as $country )
 
                     <tr >
-
+                        <td>
+                            <h6>{{$country->co_id}}</h6>
+                        </td>
                         <td class="text-center">
                             <span>
                                 <img src="{{$country->co_logo}}" alt="imagen de ejemplo" height="70" width="80" class="rounded">

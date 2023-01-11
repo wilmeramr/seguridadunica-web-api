@@ -16,7 +16,7 @@ class UsersController extends Component
     use WithPagination;
 public $us_name, $us_phone, $email, $password, $status,$role, $us_lote_id, $selected_id;
 public $pageTitle,$componentName, $search;
-private $pagination = 3;
+private $pagination = 10;
 
 
 public function paginationView()
@@ -61,6 +61,7 @@ public function paginationView()
                  $query->where('us_name','like','%'.$this->search.'%')->orWhere('email','like','%'.$this->search.'%');
             })
             ->select('users.*');
+
     }
 
 
@@ -76,6 +77,7 @@ public function paginationView()
         ->whereIn('us_lote_id',$lotes)
         ->select('users.*');
 
+        dd($data->get());
 
 
         }else{
@@ -83,6 +85,8 @@ public function paginationView()
 
         ->whereIn('us_lote_id',$lotes)
         ->select('users.*');
+
+
         }
     }
 

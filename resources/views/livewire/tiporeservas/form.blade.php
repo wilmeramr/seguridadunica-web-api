@@ -20,7 +20,7 @@
             <select wire:model="tresr_tipo"  class="form-control">
                 <option value="Elegir">Elegir</option>
 
-                <option value="1" >Depostivas</option>
+                <option value="1" >Deportivas</option>
                 <option value="2" >Gastronómicos</option>
                 <option value="3" >Amenitis</option>
 

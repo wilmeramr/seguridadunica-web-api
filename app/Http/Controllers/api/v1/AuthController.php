@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Mail\TokenReceived;
 
 use App\Models\Country;
+use App\Models\EMail;
+
 use App\Models\Lote;
 use Illuminate\Http\Request;
 use App\Models\User;
@@ -142,7 +144,7 @@ class AuthController extends Controller
     public function token(Request $request)
     {
 
-        $now =\Carbon\Carbon::now('America/Argentina/Buenos_Aires');
+
 
         $validator = \Validator::make($request->all(), [
 
@@ -160,12 +162,6 @@ class AuthController extends Controller
             return response(['error' => 'No tienes permisos para esta accion.'], 500);
         }
 
-        $auth_token = User::geToken();
-        \Log::info($auth_token);
-        $input = [
-        'password' =>Hash::make($auth_token)
-        ,'us_updated_token'=>$now];
-
 
 
 
@@ -175,20 +171,20 @@ class AuthController extends Controller
 
         if(  $updated_token > \Carbon\Carbon::now('America/Argentina/Buenos_Aires')){
             return response([
-                'message' => 'Espere solo puede generar token cada hora',
+                'message' => 'Espere solo puede generar token cada 2 hora',
 
             ],401);
         }
-        $lote = Lote::where("lot_id","=",$user->us_lote_id)->first();
 
-        $country = Country::where('co_id',"=",$lote->lot_country_id)->first();
+        EMail::create([
 
-        $user->update($input);
 
-        Mail::to($user->email)->send(new TokenReceived($country,$auth_token));
-
+            'ml_user_id' =>  $user->id ,
+            'ml_tipo' => 1,
+            'ml_user_email'=> $request['email']
+        ]);
         return response([
-            'message' => 'Token enviado a su direccion de correo.',
+            'message' => 'Token se enviara a su direccion de correo.',
 
         ],201);
     }

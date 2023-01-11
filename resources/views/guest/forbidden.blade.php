@@ -31,8 +31,7 @@
                                     <div class="card card-primary">
                                         <div class="card-header"><h4>
                                             ° Registro ya fue completado.
-                                            <br>° Supero el limite de tiempo para el registro.
-                                            <br>° La invitacion es invalida.
+
                                         </h4></div>
 
 

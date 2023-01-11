@@ -17,6 +17,7 @@ use App\Http\Livewire\Dash;
 use App\Http\Livewire\DeliveryController;
 use App\Http\Livewire\DeviceController;
 use App\Http\Livewire\EventoController;
+use App\Http\Livewire\ExpensaController;
 use App\Http\Livewire\InformacionController;
 use App\Http\Livewire\IngresosController;
 use App\Http\Livewire\LotesController;
@@ -92,6 +93,8 @@ Route::get('/home', IngresosController::class);
     Route::get('info',InformacionController::class);
     Route::get('noticias',NoticiaController::class);
     Route::get('paquetes',PaqueteController::class);
+    Route::get('expensa',ExpensaController::class);
+
     Route::get('report/pdf/{user}/{type}/{f1}/{f2}',[ExportController::class,'reportPDF']);
     Route::get('report/pdf/{user}/{type}',[ExportController::class,'reportPDF']);
 

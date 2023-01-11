@@ -231,7 +231,6 @@ public function Desactivar_Ingr_Foto($id)
 
 
 
-
         Paqueteria::create([
         'paq_user_c' => \Auth::user()->id,
         'paq_user_auth' => \Auth::user()->id,

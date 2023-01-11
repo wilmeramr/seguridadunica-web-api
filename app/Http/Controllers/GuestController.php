@@ -86,17 +86,24 @@ class GuestController extends Controller
 
             $autorizacion =  Autorizaciones::where('aut_code',"=",$request["code"])->first();
 
+
+
             Notificacion::create([
                 'noti_user_id'=>$autorizacion->aut_user_id,
                 'noti_aut_code'=> $request["code"],
-                'noti_titulo' =>  $autorizacion->aut_tipo ==1 ? 'Invitacion Confirmada':'Servicio Confirmado',
+                'noti_titulo' =>   $autorizacion->aut_tipo ==1 ? 'Invitacion Confirmada':'Visitas Recurrente Confirmada',
                 'noti_body' => $autorizacion->aut_nombre.' ha completado el registro',
-                'noti_to' => 'L:'.$autorizacion->aut_user_id,
-                'noti_event' => $autorizacion->aut_tipo ==1 ? 'Invitacion':'Servicio' ,
+                'noti_to' => 'L',
+                'noti_to_user' =>$autorizacion->aut_user_id,
+
+                'noti_event' => $autorizacion->aut_tipo ==1 ? 'Invitacion':'Visitas Recurrentes',
                 'noti_priority' =>'high',
-                'noti_envio'=> 0
+                'noti_envio'=> 0,
+                'noti_app'=> 1
+
 
             ]);
+
 
 
 
