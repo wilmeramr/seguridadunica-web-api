@@ -20,7 +20,7 @@ class ExportController extends Controller
        $data =[];
 
 
-      
+
 
        if($reportType == 0){
 
@@ -51,6 +51,8 @@ class ExportController extends Controller
         -> whereBetween('ingresos.ingr_entrada',[$from,$to])
    ->orderBy('ingr_id','desc')
     ->get();
+
+
     }else{
 
        $usersL = User::where('id','=',$userId)->select("us_lote_id")->first();

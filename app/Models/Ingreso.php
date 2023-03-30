@@ -26,7 +26,16 @@ class Ingreso extends Model
         'ingr_observacion',
         'ingr_foto',
         'ingr_entrada_envio',
-        'ingr_salida_envio'
+        'ingr_salida_envio',
+        'ingr_art_vto',
+        'ingr_licencia_numero',
+        'ingr_licencia_vto',
+        'ingr_auto_marca',
+        'ingr_auto_modelo',
+        'ingr_auto_color',
+        'ingr_seguro_nombre',
+        'ingr_seguro_numero',
+        'ingr_seguro_vto'
 
     ];
 

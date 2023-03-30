@@ -210,7 +210,11 @@
                 $('#theModal').modal('show')
 
             });
+            window.livewire.on('basicFlatpickr',msg=>{
+               // alert(msg);
+                $('#flatpickr').set('defaultDate',msg)
 
+            });
             window.livewire.on('show-modal-detalle',msg=>{
                 $('#theModalDetalle').modal('show')
 
