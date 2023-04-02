@@ -238,6 +238,23 @@
 
             });
 
+            window.livewire.on('vencimientos',msg=>{
+                swal({
+                    title: "Advertencias",
+                    text: msg,
+                    type: 'warning',
+                    showCancelButton: "Cerrar",
+                    cancelButtonColor:'#ff',
+                    confirmButtonText: 'Aceptar',
+                    confirmButtonColor: '#3B3F5C'
+                }).then(function(result){
+                    if(result.value){
+                        swal.close()
+                    }
+                })
+
+            });
+
             window.livewire.on('hidden.bs.modal',msg=>{
                 $('.er').css('display','none');
                 window.livewire.emit('ingr-deleted',msg)

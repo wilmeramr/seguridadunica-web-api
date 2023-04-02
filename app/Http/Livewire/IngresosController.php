@@ -398,11 +398,13 @@ public function Desactivar_Ingr_Foto($id)
 
                             if( $datos !=null){
                               //  dd($datos);
+
                                 $this-> ingr_nombre =  $datos->ingr_nombre;
                                 $this->ingr_foto_base64 = $datos->ingr_foto;
                                 $this->ingr_patente = $datos->ingr_patente;
                                 $this->ingr_auto_color = $datos->ingr_auto_color;
                                 $this->ingr_licencia_numero = $datos->ingr_licencia_numero;
+                                $this->ingr_licencia_vto = $datos->ingr_licencia_vto;
                                 $this->ingr_auto_marca = $datos->ingr_auto_marca;
                                 $this->ingr_auto_modelo = $datos->ingr_auto_modelo;
                                 $this->ingr_auto_color = $datos->ingr_auto_color;
@@ -411,8 +413,29 @@ public function Desactivar_Ingr_Foto($id)
 
 
 
-                                //$this->ingr_vto =$datos->ingr_patente_venc;
-                                $this->emit('basicFlatpickr',$datos->ingr_patente_venc);
+                                $this->ingr_vto =$datos->ingr_patente_venc;
+                                $this->ingr_art_vto =$datos->ingr_art_vto;
+
+                                $mensaje ='';
+                                if($datos->ingr_art_vto != null && \Carbon\Carbon::parse($datos->ingr_art_vto) <= \Carbon\Carbon::now() ){
+                                            $mensaje = $mensaje.' - ' .'Art Vencida';
+                                              //  $this->emit('vencimientos','Art Vencida');
+                                }
+
+                                if($datos->ingr_patente_venc != null && \Carbon\Carbon::parse($datos->ingr_patente_venc) <= \Carbon\Carbon::now() ){
+                                    $mensaje = $mensaje.' - ' .'Patente Vencida';
+                                  //  $this->emit('vencimientos','Patente Vencida');
+                                  }
+                                  if($datos->ingr_licencia_vto != null && \Carbon\Carbon::parse($datos->ingr_licencia_vto) <= \Carbon\Carbon::now() ){
+                                    $mensaje = $mensaje.' - ' .'Licencia Vencida';
+
+                                    //$this->emit('vencimientos','Licencia Vencida');
+                                  }
+
+                                  if($mensaje != '')
+                                            $this->emit('vencimientos',$mensaje);
+                             //   $this->emit('basicFlatpickr',$datos->ingr_patente_venc);
+
                                 //$this->urlFotoFctual = $datos->ingr_foto;
                                // $this-> aut_email =  $datos->aut_email;
 
@@ -426,8 +449,9 @@ public function Desactivar_Ingr_Foto($id)
                                 $this->ingr_auto_color = '';
                                 $this->ingr_seguro_nombre = '';
                                 $this->ingr_seguro_numero = '';
-
-
+                                $this->ingr_art_vto ='';
+                                $this->ingr_licencia_numero = '';
+                                $this->ingr_licencia_vto = '';
                               //  $this->urlFotoFctual='';
                                 //$this-> aut_email="";
 
