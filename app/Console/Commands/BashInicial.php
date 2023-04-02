@@ -100,7 +100,7 @@ foreach($iterator as $entry) {
                             throw new Exception('Email ya existe '.$data[0].'-'.$data[1].'-'.$data[4]);
                         }
 
-                          User::create([
+                        $user =  User::create([
                             'us_lote_id' => $lote_id->first()->lot_id,
                             'us_name' => Str::upper($data[2]),
                             'us_apellido' => '',
@@ -109,6 +109,8 @@ foreach($iterator as $entry) {
                             'password' =>bcrypt(Str::random(16)),
                             'us_active' => 1
                         ]);
+
+                        $user ->assignRole(3);
 
                     } catch (\Throwable $th) {
 

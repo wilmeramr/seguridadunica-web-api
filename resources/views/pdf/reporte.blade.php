@@ -7,14 +7,15 @@
 	<title>Reporte de Ventas</title>
 
 	<!-- cargar a través de la url del sistema -->
-	<!--
+
 		<link rel="stylesheet" href="{{ asset('css/custom_pdf.css') }}">
 		<link rel="stylesheet" href="{{ asset('css/custom_page.css') }}">
-	-->
+
 	<!-- ruta física relativa OS -->
+    <!--
 	<link rel="stylesheet" href="{{ public_path('css/custom_pdf.css') }}">
 	<link rel="stylesheet" href="{{ public_path('css/custom_page.css') }}">
-
+-->
 </head>
 <body>
 
@@ -23,7 +24,7 @@
 
 			<tr>
 				<td width="30%" style="vertical-align: top; padding-top: 20px;padding-left: 50px; position: relative">
-					<img src="{{public_path(''.$logo.'') }} " alt="" class="invoice-logo">
+					<img src={{$logo }} alt="" class="invoice-logo">
 				</td>
 
 				<td width="70%" class="text-left text-company" style="vertical-align: top; padding-top: 10px">
@@ -60,6 +61,7 @@
 					<th width="18%"> FECHA ENTRADA</th>
 					<th width="18%"> FECHA SALIDA</th>
 
+
 				</tr>
 			</thead>
 			<tbody>
@@ -72,8 +74,54 @@
 					<td align="center">{{$ingreso->lot_name}}</td>
 					<td align="center">{{$ingreso->ingr_entrada}}</td>
 					<td align="center">{{$ingreso->ingr_salida}}</td>
+                </tr>
 
-				</tr>
+
+        <tr>
+            <td colspan="7">
+                <table  cellpadding="0" cellspacing="0" class="table-items" width="100%">
+
+
+                     <tr  >
+                                    <th  width="10%">  Art Vto</th>
+                                    <th width="10%">  N° Licencia</th>
+                                    <th width="10%">  Lic. Vto</th>
+                                <th width="10%">  Auto Marca</th>
+                                <th width="10%">  Auto Modelo</th>
+                                <th width="10%">  Auto Color</th>
+                                <th width="10%">  Seguro Nombre</th>
+                                <th width="10%">  N° Póliza</th>
+                                <th  width="10%">  Seguro Vto</th>
+
+                                </tr>
+
+
+
+                                <tr>
+                                    <td align="center">{{$ingreso->ingr_art_vto}}</td>
+                                    <td align="center">{{$ingreso->ingr_licencia_numero}}</td>
+                                    <td align="center">{{$ingreso->ingr_licencia_vto}}</td>
+                                    <td align="center">{{$ingreso->ingr_auto_marca}}</td>
+                                    <td align="center">{{$ingreso->ingr_auto_modelo}}</td>
+                                    <td align="center">{{$ingreso->ingr_auto_color}}</td>
+                                <td align="center">{{$ingreso->ingr_seguro_nombre}}</td>
+                                <td align="center">{{$ingreso->ingr_seguro_numero}}</td>
+                                <td align="center">{{$ingreso->ingr_seguro_vto}}</td>
+
+                                </tr>
+
+
+
+                                </table>
+            </td>
+
+</tr>
+
+
+
+
+
+
                 <div class="page-break"></div>
 				@endforeach
 			</tbody>

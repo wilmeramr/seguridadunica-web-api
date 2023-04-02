@@ -189,7 +189,7 @@ class LotesController extends Component
 
         }
 
-        protected $listeners =['deleteRow'=>'Destroy'];
+        protected $listeners =['deleteRow'=>'Destroy','resetUI'=>'resetUI'];
         public function Destroy($id){
 
             $this->resetUI();

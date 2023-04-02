@@ -56,8 +56,8 @@
                                 <a class="btn btn-dark btn-block {{ count($this->ingresos) < 1 ? 'disabled':'' }}"
                                  href="{{ url('report/pdf' . '/'. $userId. '/'. $reportType. '/'. $dateFrom . '/'. $dateTo )}}" target="_blank">Generar PDF</a>
 
-                                 <a class="btn btn-dark btn-block {{ count($this->ingresos) < 1 ? 'disabled':'' }}"
-                                 href="{{ url('report/excel' . '/'. $userId. '/'. $reportType. '/'. $dateFrom . '/'. $dateTo )}}" target="_blank">Exportar a Excel</a>
+                                 {{--  <a class="btn btn-dark btn-block {{ count($this->ingresos) < 1 ? 'disabled':'' }}"
+                                 href="{{ url('report/excel' . '/'. $userId. '/'. $reportType. '/'. $dateFrom . '/'. $dateTo )}}" target="_blank">Exportar a Excel</a>  --}}
                             </div>
                         </div>
                     </div>

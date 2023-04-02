@@ -13,6 +13,7 @@ use DateTime;
 use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 use Livewire\WithFileUploads;
+use Illuminate\Support\Str;
 class IngresosController extends Component
 {
 
@@ -20,6 +21,10 @@ class IngresosController extends Component
     use WithFileUploads;
     public $ingr_autoriza, $search,$selected_id,$pageTitle,$componentName,$ingr_foto,$ingr_foto_base64,$ingr_nombre;
     public  $detalle_ingreso,$ingresoDetail,$ingr_doc,$servicio_id,$ingr_obser,$ingr_patente,$ingr_vto;
+    public $ingr_art_vto,$ingr_licencia_numero,$ingr_licencia_vto,$ingr_auto_marca,$ingr_auto_modelo,$ingr_auto_color;
+    public $ingr_seguro_nombre,$ingr_seguro_numero,$ingr_seguro_vto;
+
+    public $urlFotoFctual;
     private $pagination =10;
 
     public function paginationView()
@@ -33,7 +38,7 @@ class IngresosController extends Component
         $this->componentName="Entradas/Salidas";
         $this->ingr_autoriza ="Elegir";
         $this->servicio_id ="Elegir";
-
+       // $this->ingr_vto ="2023-01-01";
     }
 
 
@@ -72,12 +77,20 @@ class IngresosController extends Component
                                     ->orWhere('ingr_patente','like','%'.$this->search.'%')
                                     ->orWhere('ingr_patente','like','%'.$this->search.'%')
                                     ->orWhere('ingr_observacion','like','%'.$this->search.'%')
+                                    ->orWhere('ingr_art_vto','like','%'.$this->search.'%')
+                                    ->orWhere('ingr_licencia_numero','like','%'.$this->search.'%')
+                                    ->orWhere('ingr_auto_marca','like','%'.$this->search.'%')
+                                    ->orWhere('ingr_auto_modelo','like','%'.$this->search.'%')
+                                    ->orWhere('ingr_auto_color','like','%'.$this->search.'%')
+                                    ->orWhere('ingr_seguro_nombre','like','%'.$this->search.'%')
+                                    ->orWhere('ingr_seguro_numero','like','%'.$this->search.'%')
+
                                     ->orWhere(DB::raw('(select us_name from users where id = ingresos.ingr_user_c  limit 1)'),'like','%'.$this->search.'%')
                                     ->orWhere(DB::raw('(CASE WHEN ingresos.ingr_salida IS NULL THEN "SIN SALIDA" ELSE "COMPLETADO" END)'),'like','%'.$this->search.'%')
 
                                     ->orWhere('us_name','like','%'.$this->search.'%');
                               })
-                           // ->select('*')
+
                            ->orderBy('ingr_id','desc')
                             ->paginate($this->pagination);
 
@@ -242,6 +255,38 @@ public function Desactivar_Ingr_Foto($id)
         $this->validate($rules,$messages);
 
 
+        $png_url = Str::uuid().".png";
+        $path = 'img/ingresos/'.$png_url;
+        $url = null;
+            if($this->ingr_foto_base64 !=null && !Str::contains($this->ingr_foto_base64, 'http') && $this->ingr_foto== null){
+
+                $image_parts = explode(";base64,", $this->ingr_foto_base64);
+                $image_base64 = base64_decode($image_parts[1]);
+             $success =   \Storage::put( $path ,  $image_base64);
+                 $url = \Storage::url('img/ingresos/'.$png_url);
+
+
+            }else
+
+            if(Str::contains($this->ingr_foto_base64, 'http')){
+
+                $url = $this->ingr_foto_base64;
+
+
+            }else
+            if($this->ingr_foto!= null){
+                $customFileNamelogo = Str::uuid().".".$this->ingr_foto->extension();
+
+                $path = 'img/ingresos';
+                $this->ingr_foto->storeAs($path,$customFileNamelogo);
+
+                $url = \Storage::url($path.'/'.$customFileNamelogo);
+
+            }
+
+
+
+
         Ingreso::create([
              'ingr_user_c' => \Auth::user()->id,
              'ingr_user_auth' => $this->ingr_autoriza,
@@ -249,9 +294,19 @@ public function Desactivar_Ingr_Foto($id)
              'ingr_nombre' => $this->ingr_nombre,
              'ingr_tipo' => $this->servicio_id,
              'ingr_patente' => $this->ingr_patente,
+             'ingr_foto' => $url,
              'ingr_entrada' =>\Carbon\Carbon::now(),
              'ingr_patente_venc' => \Carbon\Carbon::parse($this->ingr_vto)->format('Y-m-d'),
              'ingr_observacion' => $this->ingr_obser,
+             'ingr_art_vto'=> \Carbon\Carbon::parse($this->ingr_art_vto)->format('Y-m-d'),
+            'ingr_licencia_numero'=> $this->ingr_licencia_numero,
+            'ingr_licencia_vto'=>  \Carbon\Carbon::parse($this->ingr_licencia_vto)->format('Y-m-d'),
+            'ingr_auto_marca'=> $this->ingr_auto_marca,
+            'ingr_auto_modelo'=> $this->ingr_auto_modelo,
+            'ingr_auto_color'=> $this->ingr_auto_color,
+            'ingr_seguro_nombre'=> $this->ingr_seguro_nombre,
+            'ingr_seguro_numero'=> $this->ingr_seguro_numero,
+            'ingr_seguro_vto' => \Carbon\Carbon::parse($this->ingr_seguro_vto)->format('Y-m-d')
         ]);
 
         $noti_aut_code ="INGRESO";
@@ -339,16 +394,65 @@ public function Desactivar_Ingr_Foto($id)
                       ->select('id')
                       ->orderBy('us_name','asc')->get();
 
-                      $datos = Ingreso::where('ingr_documento','=',$barcode)->whereIn('ingr_user_c',$users)->select("*")->first();
+                      $datos = Ingreso::where('ingr_documento','=',$barcode)->whereIn('ingr_user_c',$users)->select("*")->orderby('ingr_id','desc')->first();
 
                             if( $datos !=null){
+                              //  dd($datos);
+
                                 $this-> ingr_nombre =  $datos->ingr_nombre;
                                 $this->ingr_foto_base64 = $datos->ingr_foto;
+                                $this->ingr_patente = $datos->ingr_patente;
+                                $this->ingr_auto_color = $datos->ingr_auto_color;
+                                $this->ingr_licencia_numero = $datos->ingr_licencia_numero;
+                                $this->ingr_licencia_vto = $datos->ingr_licencia_vto;
+                                $this->ingr_auto_marca = $datos->ingr_auto_marca;
+                                $this->ingr_auto_modelo = $datos->ingr_auto_modelo;
+                                $this->ingr_auto_color = $datos->ingr_auto_color;
+                                $this->ingr_seguro_nombre = $datos->ingr_seguro_nombre;
+                                $this->ingr_seguro_numero = $datos->ingr_seguro_numero;
+
+
+
+                                $this->ingr_vto =$datos->ingr_patente_venc;
+                                $this->ingr_art_vto =$datos->ingr_art_vto;
+
+                                $mensaje ='';
+                                if($datos->ingr_art_vto != null && \Carbon\Carbon::parse($datos->ingr_art_vto) <= \Carbon\Carbon::now() ){
+                                            $mensaje = $mensaje.' - ' .'Art Vencida';
+                                              //  $this->emit('vencimientos','Art Vencida');
+                                }
+
+                                if($datos->ingr_patente_venc != null && \Carbon\Carbon::parse($datos->ingr_patente_venc) <= \Carbon\Carbon::now() ){
+                                    $mensaje = $mensaje.' - ' .'Patente Vencida';
+                                  //  $this->emit('vencimientos','Patente Vencida');
+                                  }
+                                  if($datos->ingr_licencia_vto != null && \Carbon\Carbon::parse($datos->ingr_licencia_vto) <= \Carbon\Carbon::now() ){
+                                    $mensaje = $mensaje.' - ' .'Licencia Vencida';
+
+                                    //$this->emit('vencimientos','Licencia Vencida');
+                                  }
+
+                                  if($mensaje != '')
+                                            $this->emit('vencimientos',$mensaje);
+                             //   $this->emit('basicFlatpickr',$datos->ingr_patente_venc);
+
+                                //$this->urlFotoFctual = $datos->ingr_foto;
                                // $this-> aut_email =  $datos->aut_email;
 
                             }else{
                                 $this-> ingr_nombre="";
                                 $this->ingr_foto_base64 = '';
+                                $this->ingr_patente = '';
+                                $this->ingr_vto =null;
+                                $this->ingr_auto_color = '';
+                                $this->ingr_auto_modelo = '';
+                                $this->ingr_auto_color = '';
+                                $this->ingr_seguro_nombre = '';
+                                $this->ingr_seguro_numero = '';
+                                $this->ingr_art_vto ='';
+                                $this->ingr_licencia_numero = '';
+                                $this->ingr_licencia_vto = '';
+                              //  $this->urlFotoFctual='';
                                 //$this-> aut_email="";
 
                             }

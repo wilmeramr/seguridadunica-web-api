@@ -19,6 +19,9 @@ class ExportController extends Controller
     {
        $data =[];
 
+
+
+
        if($reportType == 0){
 
         $from = Carbon::parse(Carbon::now())->format('Y-m-d'). ' 00:00:00';
@@ -48,6 +51,8 @@ class ExportController extends Controller
         -> whereBetween('ingresos.ingr_entrada',[$from,$to])
    ->orderBy('ingr_id','desc')
     ->get();
+
+
     }else{
 
        $usersL = User::where('id','=',$userId)->select("us_lote_id")->first();
@@ -68,30 +73,30 @@ class ExportController extends Controller
     $us_lote_id = \Auth::user()->us_lote_id;
     $lote = Lote::where('lot_id','=',$us_lote_id)->select('lot_country_id')->first();
     $country = Country::where('co_id','=',$lote->lot_country_id)->select('co_logo')->first();
-        try{
+        // try{
 
-            $explo = explode('/',$country->co_logo);
-            $imageName = $explo[count($explo)-1];
+        //     $explo = explode('/',$country->co_logo);
+        //     $imageName = $explo[count($explo)-1];
 
-            $logo = 'storage/img/countries/'. $imageName;
+            $logo = $country->co_logo;
 
-            if(!file_exists('storage/img/countries/'.$imageName)){
-                $logo = 'storage/img/noimage.jpg';
+        //     if(!file_exists('storage/img/countries/'.$imageName)){
+        //         $logo = 'storage/img/noimage.jpg';
 
-            }
+        //     }
 
 
 
-        }catch(\Throwable $th){
-            $logo = 'storage/img/noimage.jpg';
-            \Log::error($th);
-        }
-
+        // }catch(\Throwable $th){
+        //     $logo = 'storage/img/noimage.jpg';
+        //     \Log::error($th);
+        // }
 
     $user = $userId == 0? 'Todos': 'Lote - '.$data->first()->lot_name;
 
 
     $pdf = PDF::loadView('pdf.reporte', compact('data','reportType','user','dateFrom','dateTo','logo'))->setPaper('a4', 'landscape');
+
 
     return $pdf->stream('ingresos.pdf');
     }

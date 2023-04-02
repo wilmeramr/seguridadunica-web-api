@@ -28,6 +28,9 @@
                             ESTADO
                         </th>
                         <th class="table-th text-white">
+                            FOTO
+                        </th>
+                        <th class="table-th text-white">
                             DOCUMENTO
                         </th>
                         <th class="table-th text-white">
@@ -58,6 +61,11 @@
                         <td class="text-center">
                             <span class="badge {{$ingreso->ingr_salida == null ? 'badge-success':'badge-danger'}} text-uppercase">{{ $ingreso->ingr_salida == null ? 'SIN SALIDA':'COMPLETADO'}}</span>
                          </td>
+                         <td class="text-center">
+
+                            <img src="{{$ingreso->ingr_foto}}" width="80" height="80" >
+
+                        </td>
 
                          <td class="text-center">
                             <h6>{{$ingreso->ingr_documento}}</h6>
@@ -167,7 +175,10 @@
                 width: 320,
                 height: 240,
                 image_format: 'jpeg',
-                jpeg_quality: 100
+                jpeg_quality: 100,
+                constraints:{
+                    facingMode: 'environment'
+                }
             });
 
             $('.tagging').on('change',function(){
@@ -199,7 +210,11 @@
                 $('#theModal').modal('show')
 
             });
+            window.livewire.on('basicFlatpickr',msg=>{
+               // alert(msg);
+                $('#flatpickr').set('defaultDate',msg)
 
+            });
             window.livewire.on('show-modal-detalle',msg=>{
                 $('#theModalDetalle').modal('show')
 
@@ -220,6 +235,23 @@
             });
             window.livewire.on('hide-modal',msg=>{
                 $('#theModal').modal('hide');
+
+            });
+
+            window.livewire.on('vencimientos',msg=>{
+                swal({
+                    title: "Advertencias",
+                    text: msg,
+                    type: 'warning',
+                    showCancelButton: "Cerrar",
+                    cancelButtonColor:'#ff',
+                    confirmButtonText: 'Aceptar',
+                    confirmButtonColor: '#3B3F5C'
+                }).then(function(result){
+                    if(result.value){
+                        swal.close()
+                    }
+                })
 
             });
 

@@ -33,7 +33,13 @@ class ExpensaController extends Controller
         $lote_id = $request->user()->us_lote_id;
         $user_id = $request->user()->id;
 
-       $exp = Expensa::where('exp_lote_id','=',$lote_id)->where('exp_country_id',"=",$co_id)->paginate(20);
+       $exp = Expensa::where('exp_lote_id','=',$lote_id)
+
+       ->where('exp_country_id',"=",$co_id)
+       ->where('exp_activo','=',1)
+       ->orderby('exp_id','desc')
+
+       ->paginate(20);
 
         return response($exp, 201);
     }

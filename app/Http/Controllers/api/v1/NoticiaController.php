@@ -25,11 +25,9 @@ class NoticiaController extends Controller
         }
 
         $Lote = Lote::where('lot_id','=',$request->user()->us_lote_id)->select('lot_country_id')->first();
-        $Lotes = Lote::where('lot_country_id','=',$Lote->lot_country_id)->select('lot_id')->get();
-        $userC = User::whereIn('us_lote_id',$Lotes)->select('id')->get();
 
        // error_log("".$arr);
-       $noti = Noticia::whereIn('notic_to_user', $userC)
+       $noti = Noticia::where('notic_country_id', '=', $Lote->lot_country_id)
        ->orderby('notic_id','desc')->paginate(20);
 
 
@@ -56,8 +54,9 @@ class NoticiaController extends Controller
         if ($validator->fails()) {
             return response(['error' => 'Debe enviar todos los campos'], 500);
         }
-
+        $c = Lote::where('lot_id','=',$request->user()->us_lote_id)->select('lot_country_id')->first();
         Noticia::create([
+            'notic_country_id' => $c->lot_country_id,
             'notic_user_id' => $request->user()->id,
             'notic_titulo' => $request['titulo'],
             'notic_body' =>$request['body'],

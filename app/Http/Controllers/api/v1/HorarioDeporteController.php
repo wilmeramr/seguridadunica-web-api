@@ -30,19 +30,27 @@ class HorarioDeporteController extends Controller
 
         $horarios = Horario::where('hor_tipo','=',$request->tresr_tipo_horarios)
         ->select('horarios.*',
-         DB::raw("(SELECT count(1) FROM reservas WHERE
-          resr_horario_id= hor_id and resr_country_id='.$country_id->lot_country_id.' and resr_tipo_id=1
+         DB::raw("(SELECT count(1) FROM reservas
+         inner join tipo_reservas treserva on treserva.tresr_id = reservas.resr_tipo_id
+         WHERE
+          resr_horario_id= hor_id and resr_country_id=".$country_id->lot_country_id." and treserva.tresr_tipo=1
           and resr_lugar=".$request->lugar." and 	resr_fecha='".$request->fecha."') as no_habilitado"),
-          DB::raw("(CASE WHEN (SELECT resr_lote_id FROM reservas WHERE
-          resr_horario_id= hor_id and resr_country_id='.$country_id->lot_country_id.' and resr_tipo_id=1
-          and resr_lugar=".$request->lugar." and 	resr_fecha='".$request->fecha."') IS NOT NULL  THEN (SELECT resr_lote_id FROM reservas WHERE
-          resr_horario_id= hor_id and resr_country_id='.$country_id->lot_country_id.' and resr_tipo_id=1
+          DB::raw("(CASE WHEN (SELECT resr_lote_id FROM reservas
+          inner join tipo_reservas treserva on treserva.tresr_id = reservas.resr_tipo_id
+          WHERE
+          resr_horario_id= hor_id and resr_country_id=".$country_id->lot_country_id." and treserva.tresr_tipo=1
+          and resr_lugar=".$request->lugar." and 	resr_fecha='".$request->fecha."') IS NOT NULL  THEN (SELECT resr_lote_id FROM reservas
+          inner join tipo_reservas treserva on treserva.tresr_id = reservas.resr_tipo_id
+          WHERE
+          resr_horario_id= hor_id and resr_country_id=".$country_id->lot_country_id." and treserva.tresr_tipo=1
           and resr_lugar=".$request->lugar." and 	resr_fecha='".$request->fecha."') ELSE 0 END) as lote"))
         ->orderby('hor_id','asc')->get();
 
 
-
-        return response($horarios, 201);
+$response = [
+    'data'=>$horarios
+];
+        return response($response, 201);
     }
 
     /**

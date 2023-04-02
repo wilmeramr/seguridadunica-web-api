@@ -10,13 +10,16 @@ use App\Http\Controllers\api\v1\DocumentoController;
 use App\Http\Controllers\api\v1\EmergenciaController;
 use App\Http\Controllers\api\v1\ExpensaController;
 use App\Http\Controllers\api\v1\HorarioDeporteController;
+use App\Http\Controllers\api\v1\InfoController;
 use App\Http\Controllers\api\v1\NotificacionController;
 use App\Http\Controllers\api\v1\MascotaController;
 use App\Http\Controllers\api\v1\NoticiaController;
+use App\Http\Controllers\api\v1\PaqueteriaController;
+use App\Http\Controllers\api\v1\ReservasController;
 use App\Http\Controllers\api\v1\ServicioTiposController;
 use App\Http\Controllers\api\v1\SelfieController;
 use App\Http\Controllers\api\v1\TipoReservasController;
-
+use App\Http\Controllers\api\v1\VersionController;
 
 /*
 |--------------------------------------------------------------------------
@@ -93,9 +96,22 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
 
     Route::get('/selfieurl', [SelfieController::class, 'getUrlSelfie']);
     Route::get('/treservas', [TipoReservasController::class, 'index']);
-    Route::post('/reservas', [TipoReservasController::class, 'create']);
-    Route::delete('/reservas', [TipoReservasController::class, 'destroy']);
+    Route::get('/reservas', [ReservasController::class, 'index']);
+
+    Route::post('/reservas', [ReservasController::class, 'create']);
+    Route::delete('/reservas', [ReservasController::class, 'destroy']);
+    Route::delete('/reservashorarios', [ReservasController::class, 'destroyRHorarios']);
+
     Route::get('/horarios', [HorarioDeporteController::class, 'index']);
+
+    Route::get('/info', [InfoController::class, 'index']);
+    Route::post('/info', [InfoController::class, 'create']);
+    Route::delete('/info', [InfoController::class, 'destroy']);
+
+    Route::get('/version', [VersionController::class, 'index']);
+
+    Route::get('/paqueteria', [PaqueteriaController::class, 'index']);
+
 
 
     });

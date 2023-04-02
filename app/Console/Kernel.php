@@ -20,11 +20,12 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        $schedule->command('BashInicial:process')->cron('* * * * *');
+       // $schedule->command('BashInicial:process')->cron('* * * * *');
+       $schedule->command('Token:Enviar')->cron('* * * * *');
 
         $schedule->command('MailIngreso:Enviar')->cron('* * * * *');
        //  $schedule->command('Autorizaciones:Desactivar')->daily();
-        // $schedule->command('mailautorizacion:enviar')->cron('* * * * *');
+         $schedule->command('mailautorizacion:enviar')->cron('* * * * *');
         //$schedule->command('barcode:clear')->everyMinute();
         // $schedule->command('enviarnotifications:enviar')->everyMinute();
 

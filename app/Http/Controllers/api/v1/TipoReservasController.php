@@ -31,9 +31,11 @@ class TipoReservasController extends Controller
         ->where('tresr_tipo','=',$request->tipo)
         ->where('tresr_activo','=',1)->get();
 
+$response = [
+    'data'=>$tReserva
+];
 
-
-        return response($tReserva, 201);
+        return response($response, 201);
     }
 
     /**

@@ -88,7 +88,7 @@ if($request['aut_tipo']=='4'){
         .' te envió esta invitación a '. $country->co_name
         .' para acceder él dia '.\Carbon\Carbon::parse($request['aut_desde'])->format('d/m/Y').'.'
         .' Completa tus datos en '.env('APP_URL').'/guest/'.$code
-        .'Obtendrás un Código QR vía email el cual debe mostrar en el momento del ingreso.';
+        .' Obtendrás un Código QR vía email el cual debe mostrar en el momento del ingreso.';
 
         Code::create([
             'referral_code'=>$code

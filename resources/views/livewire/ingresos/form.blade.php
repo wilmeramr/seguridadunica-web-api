@@ -50,7 +50,8 @@
     </div>
 
 
-    <div class="col-sm-12 mt-3">
+    <div class="col-sm-4 mt-1">
+
         <div class="input-group">
             <div class="input-group-prepend">
                 <span class="input-group-text">
@@ -59,13 +60,13 @@
                     </span>
                 </span>
             </div>
-            <input type="text" id="dni"   wire:keydown.enter.prevent="$emit('scan-code',$('#dni').val(),'form')" wire:model="ingr_doc" class="form-control" placeholder="Nro de Documento">
+            <input type="text" id="dni"   wire:keydown.enter.prevent="$emit('scan-code',$('#dni').val(),'form')" wire:model="ingr_doc" class="form-control" placeholder="N° Documento">
         </div>
         @error('ingr_doc') <span class="text-danger er">{{$message}}</span>
         @enderror
     </div>
 
-    <div class="col-sm-12 mt-3">
+    <div class="col-sm-8 mt-1">
         <div class="input-group">
             <div class="input-group-prepend">
                 <span class="input-group-text">
@@ -81,9 +82,18 @@
     </div>
 
 
-    <div class="col-sm-12 mt-3">
+    <div class="col-sm-6 mt-3">
         <div class="form-group">
-            <label >Seleccionar tipo de visita</label>
+            <div class="input-group">
+              <div class="input-group-prepend">
+                <span class="input-group-text">
+                    <span class="fas fa-edit">
+                        Tipo Visita
+                    </span>
+                </span>
+              </div>
+
+
            <select wire:model.lazy="servicio_id"  class="form-control" >
                <option value="Elegir" selected>Elegir</option>
              @foreach ($servicios as $servicio )
@@ -95,7 +105,148 @@
         </div>
     </div>
 
-    <div class="col-sm-12 mt-3">
+    </div>
+
+    <div class="col-sm-6 mt-3">
+        <div class="form-group">
+            <div class="input-group">
+            <div class="input-group-prepend">
+                <span class="input-group-text">
+                    <span class="fas fa-edit">
+                        ART
+                    </span>
+                </span>
+            </div>
+            <input  wire:model.lazy="ingr_art_vto" class="form-control flatpickr basicFlatpickr flatpickr-input" type="text" placeholder="Fecha Vigencia" readonly="readonly">
+            @error('ingr_art_vto') <span class="text-danger er">{{$message}}</span>
+            @enderror
+        </div>
+    </div>
+</div>
+
+<div class="col-sm-6 mt-3">
+    <div class="input-group">
+        <div class="input-group-prepend">
+            <span class="input-group-text">
+                <span class="fas fa-edit">
+                    N° Licencia
+                </span>
+            </span>
+        </div>
+        <input type="text" wire:model.lazy="ingr_licencia_numero" class="form-control" placeholder="Numero">
+    </div>
+    @error('ingr_licencia_numero') <span class="text-danger er">{{$message}}</span>
+    @enderror
+</div>
+<div class="col-sm-6 mt-3">
+    <div class="form-group">
+
+        <input  wire:model.lazy="ingr_licencia_vto" class="form-control flatpickr basicFlatpickr flatpickr-input" type="text" placeholder="Fecha Vencimiento" readonly="readonly">
+        @error('ingr_licencia_vto') <span class="text-danger er">{{$message}}</span>
+        @enderror
+    </div>
+</div>
+
+
+<div class="col-sm-12 mt-3">
+<div class="progress">
+    <div class="progress-bar" role="progressbar" style="width: 100%;" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">AUTO</div>
+  </div>
+</div>
+
+<div class="col-sm-4 mt-3">
+    <div class="input-group">
+        <div class="input-group-prepend">
+            <span class="input-group-text">
+                <span class="fas fa-edit">
+                    Marca
+                </span>
+            </span>
+        </div>
+        <input type="text" wire:model.lazy="ingr_auto_marca" class="form-control" placeholder="Marca">
+    </div>
+    @error('ingr_auto_marca') <span class="text-danger er">{{$message}}</span>
+    @enderror
+</div>
+
+<div class="col-sm-4 mt-3">
+    <div class="input-group">
+        <div class="input-group-prepend">
+            <span class="input-group-text">
+                <span class="fas fa-edit">
+                    Modelo
+                </span>
+            </span>
+        </div>
+        <input type="text" wire:model.lazy="ingr_auto_modelo" class="form-control" placeholder="Modelo">
+    </div>
+    @error('ingr_auto_modelo') <span class="text-danger er">{{$message}}</span>
+    @enderror
+</div>
+
+<div class="col-sm-4 mt-3">
+    <div class="input-group">
+        <div class="input-group-prepend">
+            <span class="input-group-text">
+                <span class="fas fa-edit">
+                    Color
+                </span>
+            </span>
+        </div>
+        <input type="text" wire:model.lazy="ingr_auto_color" class="form-control" placeholder="Color">
+    </div>
+    @error('ingr_auto_color') <span class="text-danger er">{{$message}}</span>
+    @enderror
+</div>
+
+<div class="col-sm-4 mt-3">
+    <div class="input-group">
+        <div class="input-group-prepend">
+            <span class="input-group-text">
+                <span class="fas fa-edit">
+                    Seguro
+                </span>
+            </span>
+        </div>
+        <input type="text" wire:model.lazy="ingr_seguro_nombre" class="form-control" placeholder="Nombre">
+    </div>
+    @error('ingr_seguro_nombre') <span class="text-danger er">{{$message}}</span>
+    @enderror
+</div>
+
+<div class="col-sm-4 mt-3">
+    <div class="input-group">
+        <div class="input-group-prepend">
+            <span class="input-group-text">
+                <span class="fas fa-edit">
+                    N°
+                </span>
+            </span>
+        </div>
+        <input type="text" wire:model.lazy="ingr_seguro_numero" class="form-control" placeholder="Póliza">
+    </div>
+    @error('ingr_seguro_numero') <span class="text-danger er">{{$message}}</span>
+    @enderror
+</div>
+
+<div class="col-sm-4 mt-3">
+    <div class="form-group">
+        <div class="input-group">
+        <div class="input-group-prepend">
+            <span class="input-group-text">
+                <span class="fas fa-edit">
+                    Fecha
+                </span>
+            </span>
+        </div>
+        <input  wire:model.lazy="ingr_seguro_vto" class="form-control flatpickr basicFlatpickr flatpickr-input" type="text" placeholder="Vigencia" readonly="readonly">
+        @error('ingr_seguro_vto') <span class="text-danger er">{{$message}}</span>
+        @enderror
+    </div>
+</div>
+</div>
+
+    <div class="col-sm-6 mt-3">
         <div class="input-group">
             <div class="input-group-prepend">
                 <span class="input-group-text">
@@ -109,7 +260,7 @@
         @error('ingr_patente') <span class="text-danger er">{{$message}}</span>
         @enderror
     </div>
-    <div class="col-sm-12 mt-3">
+    <div class="col-sm-6 mt-3">
         <div class="form-group">
 
             <input  wire:model.lazy="ingr_vto" class="form-control flatpickr basicFlatpickr flatpickr-input" type="text" placeholder="Fecha Vencimiento" readonly="readonly">

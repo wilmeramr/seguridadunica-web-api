@@ -17,13 +17,14 @@ class CreateReservasTable extends Migration
             $table->id('resr_id');
             $table->integer('resr_country_id');
             $table->integer('resr_lote_id');
+            $table->integer('	resr_user_id');
             $table->integer('resr_tipo_id');
             $table->integer('resr_horario_id');
             $table-> date('resr_fecha');
             $table-> integer('resr_lugar')->default(1);
             $table-> integer('resr_cant_personas')->default(1);
-
             $table-> integer('resr_activo')->default(1);
+            $table-> string('resr_comentarios',400);
 
             $table->timestamps();
 

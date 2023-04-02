@@ -102,8 +102,16 @@
             });
             window.livewire.on('hidden.bs.modal',msg=>{
                 $('.er').css('display','none');
+                window.livewire.emit('resetUI',msg);
+
 
             });
+
+            $('#theModal').on('hidden.bs.modal', function () {
+
+                window.livewire.emit('resetUI');
+              });
+
 
 
 
