@@ -291,67 +291,17 @@
         @error('ingr_autoriza') <span class="text-danger er">{{$message}}</span>
         @enderror
         <div class="form-group">
-            <div class="alert alert-success" role="alert">
-               <h1> Visita a : {{$ingr_autoriza_info}}</h1>
-              </div>
-            <div class="input-group">
-                <input type="text" wire:model="searchauth" id="modal-search-input" placeholder="Puedes buscar por nombre de lote o nombre de usuario..." class="form-control">
-                <div class="input-group-prepend">
-                    <span class="input-group-text input-gp">
-                        <i class="fas fa-search"></i>
-                    </span>
-                </div>
-            </div>
-            <table class="table table-bordered table-striped mt-1">
-                <thead class="text-white" style="background: #3B3F5C">
-                    <tr>
-
-                        <th class="table-th text-left text-white">LOTE</th>
-                        <th class="table-th text-center text-white">NOMBRE USUARIO</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @forelse($Users as $user)
-                    <tr>
-
-                        <td>
-                            <div class="text-left">
-                                <h6><b>{{$user->lot_name}}</b></h6>
-
-                            </div>
-                        </td>
-
-                        <td class="text-center">
-                            <h6>{{$user->us_name}}</h6>
-                        </td>
-                        <td class="text-center">
-                            <button wire:click.prevent="$emit('scan-code-byid',{{$user->id}})" class="btn btn-dark">
-                                <i class="fas fa-plus mr-1"></i>
-                                Añadir
-                            </button>
-                        </td>
-                    </tr>
-                    @empty
-                    <tr>
-                        <td colspan="5">SIN RESULTADOS</td>
-                    </tr>
-                    @endforelse
-                </tbody>
-            </table>
-
-           {{--   <select wire:model="ingr_autoriza"  class="form-control" >
+            <label class="my-1 mr-2">Visita a :</label>
+            <select wire:model="ingr_autoriza"  class="form-control" >
                 <option  value="Elegir" selected>Elegir</option>
                 @foreach ($users as $user )
                 <option  value="{{$user->id }}" >{{$user->us_name }} - {{$user->lot_name}} </option>
                 @endforeach
-            </select>  --}}
-
+            </select>
 
     </div>
 
 </div>
-
-
 
 
 </div>

@@ -454,7 +454,7 @@ class EnviarMailAutorizacion extends Command
                                                                       <table role='presentation' border='0' cellpadding='0' cellspacing='0'>
                                                                         <tr>
                                                                           <td>
-                                                                          <img src='".$country->co_logo."' width='350' height='150'>
+                                                                          <img src=".$country->co_logo." width='350' height='150'>
 
                                                                             <p>Muchas gracias por completar sus datos. Lo esperamos en {$country->co_name} el dia ".date('d-m-y', strtotime($value->aut_desde))."</p>
                                                                            <p>En caso de ser visita presentar el siguiente codigo:</p>
@@ -492,7 +492,7 @@ class EnviarMailAutorizacion extends Command
                                                       </body>
                                                     </html>"
                                                 );
-                                                $sendgrid = new \SendGrid(env('SENDGRID_API_KEY'));
+                                                $sendgrid = new \SendGrid(env('SENDGRID_API_KEY'),  ['host' => env('SENDGRID_HOST_TLS_12')]);
                                                 try {
                                                     $response = $sendgrid->send($email);
 

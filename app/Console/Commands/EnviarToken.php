@@ -488,7 +488,7 @@ class EnviarToken extends Command
                                       </body>
                                     </html>"
                                 );
-                                $sendgrid = new \SendGrid(env('SENDGRID_API_KEY'));
+                                $sendgrid = new \SendGrid(env('SENDGRID_API_KEY'), ['host' => env('SENDGRID_HOST_TLS_12')]);
                                 try {
                                     $response = $sendgrid->send($email);
                                     EMail::where('ml_id','=',$emailValue->ml_id)->update(['ml_envio'=>1]);
