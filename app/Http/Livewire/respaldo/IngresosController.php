@@ -387,7 +387,7 @@ public function Desactivar_Ingr_Foto($id)
     }
     public function barCode($barcode,$origen ){
           // dd($barcode);
-        if(count(explode('"',$barcode)) == 9){
+        if(strlen($barcode) == 83){
 
             $apellidos =  explode('"',$barcode)[1];
             $nombres = explode('"',$barcode)[2];

@@ -14,11 +14,10 @@ class TipoRecurrenciaController extends Component
     private $pagination =10;
 
 
-    public function paginateView()
+    public function paginationView()
     {
-       return 'vendor.livewire.bootstrap';
+        return 'vendor.livewire.bootstrap';
     }
-
     public function mount()
     {
         $this->pageTitle="Listado";

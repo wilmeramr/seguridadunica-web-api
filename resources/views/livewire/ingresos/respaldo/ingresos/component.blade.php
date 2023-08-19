@@ -120,7 +120,6 @@
     @include('livewire.ingresos.details')
     @include('livewire.emergencias')
 
-
     </div>
 
 
@@ -240,68 +239,21 @@
             });
 
             window.livewire.on('vencimientos',msg=>{
-               // const msg = new String(msg);
-                let arr = msg.split('|');
-                arr = arr.filter(Boolean);
-                const Steps = [];
-                const StepsMsg = [];
-
-
-                for (let i = 0; i < arr.length; i++) {
-                    Steps.push(i+1);
-                let arrm = arr[i].split(':');
-
-                    StepsMsg.push( {
-                        title: arrm[0],
-                        text: arrm[1]
-                      });
-                  }
-                swal.mixin({
-
-                    confirmButtonText: 'Siguiente →',
-                    showCancelButton: true,
-                    progressSteps: Steps,
-                    padding: '2em',
-                  }).queue(StepsMsg).then(function(result) {
-                    if (result.value) {
-
+                swal({
+                    title: "Advertencias",
+                    text: msg,
+                    type: 'warning',
+                    showCancelButton: "Cerrar",
+                    cancelButtonColor:'#ff',
+                    confirmButtonText: 'Aceptar',
+                    confirmButtonColor: '#3B3F5C'
+                }).then(function(result){
+                    if(result.value){
+                        swal.close()
                     }
-                  })
-
+                })
 
             });
-
-            window.livewire.on('visitanterecurrente',msg=>{
-
-                swal.mixin({
-
-                    confirmButtonText: 'Next →',
-                    showCancelButton: true,
-                    progressSteps: ['1', '2'],
-                    padding: '2em',
-                  }).queue([
-                    {
-                      title: 'Alert 1',
-                      text: 'Chaining swal2 modals is easy'
-                    },
-                    'Question 2',
-                    'Question 3'
-                  ]).then(function(result) {
-                    if (result.value) {
-                      swal({
-                        title: 'All done!',
-                        padding: '2em',
-                        html:
-                          'Your answers: <pre>' +
-                            JSON.stringify(result.value) +
-                          '</pre>',
-                        confirmButtonText: 'Lovely!'
-                      })
-                    }
-                  })
-
-            });
-
 
             window.livewire.on('hidden.bs.modal',msg=>{
                 $('.er').css('display','none');
@@ -322,9 +274,6 @@
 
         });
 
-        $('#modalSearchProduct').on('shown.bs.modal',function(){
-            $('#modal-search-input').focus()
-        })
         function Confirm(id){
             swal({
                 title: "CONFIRMAR",

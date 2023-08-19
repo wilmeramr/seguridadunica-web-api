@@ -67,14 +67,17 @@ class EnviarMailIngreso extends Command
                     ->select('usr.us_lote_id','ingresos.ingr_id','ingresos.ingr_documento','ingresos.ingr_nombre',
                     'ingr_observacion','ingresos.ingr_entrada','ingresos.ingr_salida','ingresos.ingr_entrada_envio','ingresos.ingr_salida_envio','cot.co_logo','cot.co_name'
                     )
-                    ->where('ingr_entrada_envio','=',0)->whereNotNull('ingr_entrada')
+                    ->where('ingr_entrada_envio','=',0)->orWhere('ingr_salida_envio', '=',0)
+                 /*    ->Where(function ($q) {
+                        $q->Where('ingr_entrada_envio', '=',0)->whereNotNull('ingr_entrada');
+                    })
                     ->orWhere(function ($q) {
                         $q->Where('ingr_salida_envio', '=',0)->whereNotNull('ingr_salida');
-                    })
+                    }) */
                     ->get();
 
 
-
+                    \Log::error($ingr);
 
                                 foreach($ingr as $ingrValue){
 
@@ -83,7 +86,7 @@ class EnviarMailIngreso extends Command
 
                                    foreach($users as $usr){
 
-                                        if($ingrValue->ingr_entrada_envio==0){
+                                        if($ingrValue->ingr_entrada_envio==0 && !is_null($ingrValue->ingr_entrada)){
 
                                             $email = new \SendGrid\Mail\Mail();
                                             $email->setFrom("noreply@seguridadunica.com", $ingrValue->co_name);
@@ -450,7 +453,7 @@ class EnviarMailIngreso extends Command
 
                                                                         <p>Documento: ".$ingrValue->ingr_documento."</p><br>
 
-                                                                        <p> Fecha de Ingreso:  ". date('d-m-y H:i:s', strtotime($ingrValue->ingr_entrada))."</p>
+                                                                        <p> Fecha de Ingreso:  ".\Carbon\Carbon::parse($ingrValue->ingr_entrada)->format('d-m-Y H:i')."</p>
 
                                                                               </td>
                                                                             </tr>
@@ -488,7 +491,7 @@ class EnviarMailIngreso extends Command
                                                   </body>
                                                 </html>"
                                             );
-                                            $sendgrid = new \SendGrid(env('SENDGRID_API_KEY'));
+                                            $sendgrid = new \SendGrid(env('SENDGRID_API_KEY') ,['host' => env('SENDGRID_HOST_TLS_12')]);
                                             try {
                                                 $response = $sendgrid->send($email);
                                                 Ingreso::where('ingr_id','=',$ingrValue->ingr_id)->update(['ingr_entrada_envio'=>1]
@@ -502,7 +505,7 @@ class EnviarMailIngreso extends Command
 
                                         }
 
-                                        if($ingrValue->ingr_salida_envio==0){
+                                        if($ingrValue->ingr_salida_envio==0 && !is_null($ingrValue->ingr_salida)){
                                             $email = new \SendGrid\Mail\Mail();
                                             $email->setFrom("noreply@seguridadunica.com", $ingrValue->co_name);
                                             $email->setSubject("Noti-Egreso");
@@ -867,8 +870,8 @@ class EnviarMailIngreso extends Command
 
                                                                         <p>Documento: ".$ingrValue->ingr_documento."</p><br>
 
-                                                                        <p> Fecha de Ingreso:  ". date('d-m-y H:i:s', strtotime($ingrValue->ingr_entrada))."</p>
-                                                                        <p> Fecha de Egreso:  ". date('d-m-y H:i:s', strtotime($ingrValue->ingr_salida))."</p>
+                                                                        <p> Fecha de Ingreso:  ".\Carbon\Carbon::parse($ingrValue->ingr_entrada)->format('d-m-Y H:i') /* date('d-m-y H:i:s', strtotime($ingrValue->ingr_entrada))*/."</p>
+                                                                        <p> Fecha de Egreso:  ". \Carbon\Carbon::parse($ingrValue->ingr_salida)->format('d-m-Y H:i') /* date('d-m-y H:i:s', strtotime($ingrValue->ingr_salida))*/."</p>
                                                                               </td>
                                                                             </tr>
                                                                           </tbody>
@@ -905,7 +908,7 @@ class EnviarMailIngreso extends Command
                                                   </body>
                                                 </html>"
                                             );
-                                            $sendgrid = new \SendGrid(env('SENDGRID_API_KEY'));
+                                            $sendgrid = new \SendGrid(env('SENDGRID_API_KEY'), ['host' => env('SENDGRID_HOST_TLS_12')]);
                                             try {
                                                 $response = $sendgrid->send($email);
                                                 Ingreso::where('ingr_id','=',$ingrValue->ingr_id)->update([ 'ingr_salida_envio'=>1]);

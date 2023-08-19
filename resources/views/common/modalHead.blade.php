@@ -1,4 +1,4 @@
-<div wire:ignore.self class="modal fade" id="theModal"  role="dialog">
+<div wire:ignore.self class="modal fade " id="theModal"  role="dialog">
     <div class="modal-dialog modal-lg" role="document">
       <div class="modal-content">
         <div class="modal-header bg-dark">

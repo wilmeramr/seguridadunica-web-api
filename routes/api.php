@@ -40,6 +40,10 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::prefix('v1')->group(function () {
 Route::post('/login', [AuthController::class, 'login']);
 Route::post('/token', [AuthController::class, 'token']);
+Route::middleware('Sanctum')->get('/doc', [DocumentoController::class, 'index']);
+Route::middleware('Sanctum')->get('/user', function (Request $request) {
+    return $request->user();
+});
 });
 
 Route::get('/storage-link',function(){
@@ -56,7 +60,7 @@ Route::get('/storage-link',function(){
 
 });
 
-Route::group(['middleware' => ['auth:sanctum']], function () {
+Route::group(['middleware' => ['Sanctum']], function () {
 
     Route::prefix('v1')->group(function () {
 
@@ -85,7 +89,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::post('/mascota/uploadImg', [MascotaController::class, 'uploadImage']);
     Route::post('/doc/uploadPDF', [DocumentoController::class, 'uploadPDF']);
     Route::post('/doc', [DocumentoController::class, 'create']);
-    Route::get('/doc', [DocumentoController::class, 'index']);
+   // Route::get('/doc', [DocumentoController::class, 'index']);
 
     Route::post('/eme', [EmergenciaController::class, 'create']);
 
