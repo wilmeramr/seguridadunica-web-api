@@ -26,6 +26,9 @@
                 <th class="table-th text- text-center ">
                     USUARIO
                 </th>
+                <th class="table-th text- text-center ">
+                    LOTE
+                </th>
                 <th class="table-th text- text-center">
                     TELÉFONO
                 </th>
@@ -47,9 +50,13 @@
                     <tr>
                         @foreach ($data as $r )
 
-                        <td>
+                        <td class="text-center">
                             <h6>{{$r->us_name}}</h6>
                         </td>
+                        <td class="text-center">
+                            <h6>{{$r->lot_name}}</h6>
+                        </td>
+                        
                         <td class="text-center">
                             <h6>{{$r->us_phone}}</h6>
                         </td>
