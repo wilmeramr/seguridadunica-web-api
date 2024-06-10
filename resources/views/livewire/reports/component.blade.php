@@ -13,12 +13,12 @@
                     <div class="col-sm-12 col-md-3">
                         <div class="row">
                             <div class="col-sm-12">
-                                <h6>Elige el Usuario</h6>
+                                <h6>Elige el Lote</h6>
                                 <div class="form-group">
                                     <select wire:model="userId"   class="form-control">
-                                        <option value="0">Todos</option>
+                                         <option value="0">Seleccione</option>
                                         @foreach ($usersQuery as $user )
-                                        <option value="{{$user->id}}">{{$user->us_name}}
+                                        <option value="{{$user->lot_id}}">{{$user->lot_name}}
                                         </option>
 
                                         @endforeach
@@ -26,7 +26,7 @@
                                 </div>
                             </div>
                             <div class="col-sm-12">
-                                <h6>Elige el Usuario</h6>
+                                <h6>Elige el tipo de busqueda</h6>
                                 <div class="form-group">
                                     <select wire:model="reportType"class="form-control">
                                         <option value="0">Entradas del dia</option>
@@ -53,7 +53,7 @@
                                 <button wire:click="$refresh" class="btn btn-dark btn-block">
                                     Consultar
                                 </button>
-                                <a class="btn btn-dark btn-block {{ count($this->ingresos) < 1 ? 'disabled':'' }}"
+                                <a class="btn btn-dark btn-block {{ count($this->ingresos) < 1 || $this->userId == 0 ? 'disabled':'' }}"
                                  href="{{ url('report/pdf' . '/'. $userId. '/'. $reportType. '/'. $dateFrom . '/'. $dateTo )}}" target="_blank">Generar PDF</a>
 
                                  {{--  <a class="btn btn-dark btn-block {{ count($this->ingresos) < 1 ? 'disabled':'' }}"

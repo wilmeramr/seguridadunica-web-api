@@ -54,9 +54,8 @@ class ExportController extends Controller
 
 
     }else{
-
-       $usersL = User::where('id','=',$userId)->select("us_lote_id")->first();
-       $usersL2 = User::where('us_lote_id','=',$usersL->us_lote_id)->select("id")->get();
+       //$usersL = User::where('id','=',$userId)->select("us_lote_id")->first();
+       $usersL2 = User::where('us_lote_id','=',$userId)->select("id")->get();
 
         $data = Ingreso::join('servicio_tipos as ts','ts.stp_id','ingresos.ingr_tipo')
         ->join('users as usr','usr.id','ingresos.ingr_user_auth')
@@ -68,6 +67,7 @@ class ExportController extends Controller
 
    ->orderBy('ingr_id','desc')
     ->get();
+
     };
 
     $us_lote_id = \Auth::user()->us_lote_id;
@@ -94,7 +94,7 @@ class ExportController extends Controller
 
     $user = $userId == 0? 'Todos': 'Lote - '.$data->first()->lot_name;
 
-
+//dd('hola');
     $pdf = PDF::loadView('pdf.reporte', compact('data','reportType','user','dateFrom','dateTo','logo'))->setPaper('a4', 'landscape');
 
 
